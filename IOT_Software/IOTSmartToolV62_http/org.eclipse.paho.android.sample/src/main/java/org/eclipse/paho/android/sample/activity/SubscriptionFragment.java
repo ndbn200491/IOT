@@ -1,7 +1,6 @@
 package org.eclipse.paho.android.sample.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -23,7 +22,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.paho.android.sample.R;
 import org.eclipse.paho.android.sample.components.SubscriptionListItemAdapter;
 import org.eclipse.paho.android.sample.internal.Connections;
@@ -34,20 +39,16 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Map;
 
 // http
-
-import java.io.IOException;
-
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class SubscriptionFragment extends Fragment {
@@ -59,8 +60,11 @@ public class SubscriptionFragment extends Fragment {
     String temp;
     String ph;
     String cmd;
+    String httpContent;
     int i = 100000;
-
+    String SetServerString = "";
+    //String httpPath = "http://khoapham.vn/KhoaPhamTraining/laptrinhios/jSON/demo3.json";
+    String httpPath = "http://192.168.4.1";
    // MessageListItemAdapter messageListAdapter;
     ArrayList<Subscription> subscriptions;
     ArrayList<ReceivedMessage> messages;
@@ -84,13 +88,10 @@ public class SubscriptionFragment extends Fragment {
         connection = connections.get(connectionHandle);
         subscriptions = connection.getSubscriptions();
         messages = connection.getMessages();
+        //this.runOnUiThread(Runnable action){
 
 
-        String serverURL = "http://192.168.4.1";
-
-        // Create Object and call AsyncTask execute Method
-        new LongOperation().execute(serverURL);
-
+        //}
 
     }
 
@@ -174,11 +175,16 @@ btnRefresh.setOnClickListener(new View.OnClickListener() {
         final TextView humiData = (TextView) rootView.findViewById(R.id.humiData);
         final TextView tempData = (TextView) rootView.findViewById(R.id.tempData);
         final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
-        humiData.setText(humi+"(%)");
-        tempData.setText(temp+"(C Degree)");
-        PHData.setText(ph+"(+/-)");
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new readData().execute(httpPath);
+            }
+        });
     }
 });
+
+
 
         /*if(strHumiData !="") {
             humiData.setText(this.getArguments().getString("humiData")+"(%)");
@@ -222,65 +228,54 @@ btnRefresh.setOnClickListener(new View.OnClickListener() {
     public void onDetach() {
         super.onDetach();
     }
-    // Class with extends AsyncTask class
 
-    private class LongOperation  extends AsyncTask<String, Void, Void> {
+    class readData extends AsyncTask<String, Integer, String> {
 
-        private final HttpClient Client = new DefaultHttpClient();
-        private String Content;
-        private String Error = null;
-        private ProgressDialog Dialog = new ProgressDialog(getActivity().getApplication());
-        //TextView uiUpdate = (TextView) findViewById(R.id.output);
-        protected void onPreExecute() {
-            // NOTE: You can call UI Element here.
-
-            //UI Element
-            //uiUpdate.setText("Output : ");
-            Dialog.setMessage("Downloading source..");
-            Dialog.show();
+        @Override
+        protected String doInBackground(String... param) {
+            return readDataFromUrl(param[0]);
         }
 
-        // Call after onPreExecute method
-        protected Void doInBackground(String... urls) {
-            try {
+        @Override
+        protected void onPostExecute(String s) {
+            //super.onPostExecute(s);
+            Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 
-                // Call long running operations here (perform background computation)
-                // NOTE: Don't call UI Element here.
+        }
+    }
 
-                // Server url call by GET method
-                HttpGet httpget = new HttpGet(urls[0]);
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                Content = Client.execute(httpget, responseHandler);
+    private static String  readDataFromUrl(String theUrl){
+        StringBuilder content = new StringBuilder();
+        try
+        {
+            // create a url object
+            URL url = new URL(theUrl);
 
-            } catch (ClientProtocolException e) {
-                Error = e.getMessage();
-                cancel(true);
-            } catch (IOException e) {
-                Error = e.getMessage();
-                cancel(true);
+            // create a urlconnection object
+            URLConnection urlConnection = url.openConnection();
+
+            // wrap the urlconnection in a bufferedreader
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            String line;
+
+            // read from the urlconnection via the bufferedreader
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                content.append(line + "\n");
             }
-
-            return null;
+            bufferedReader.close();
         }
-
-        protected void onPostExecute(Void unused) {
-            // NOTE: You can call UI Element here.
-
-            // Close progress dialog
-            Dialog.dismiss();
-
-            if (Error != null) {
-
-               // uiUpdate.setText("Output : "+Error);
-
-            } else {
-
-               // uiUpdate.setText("Output : "+Content);
-
-            }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
+        return content.toString();
 
     }
+
+
+
 
     protected void showInputDialog(){
         LayoutInflater layoutInflater =  (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

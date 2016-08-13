@@ -1,0 +1,19 @@
+!SESSION 2016-08-12 11:51:33.154 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_91
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -perspective it.baeyens.arduino.application.perspective
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -perspective it.baeyens.arduino.application.perspective
+
+!ENTRY it.baeyens.arduino.core 4 0 2016-08-12 11:51:46.822
+!MESSAGE we have found programs in the path that might conflict with our external builder.
+The conflicting programs are sh.
+The program might still function but if you get strange build errors you know where to look
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-08-12 11:51:50.621
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\VSKYLINE'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.

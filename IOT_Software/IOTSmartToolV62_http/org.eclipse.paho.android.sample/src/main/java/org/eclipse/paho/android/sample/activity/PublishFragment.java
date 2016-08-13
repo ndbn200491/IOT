@@ -1,6 +1,7 @@
 package org.eclipse.paho.android.sample.activity;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -16,11 +17,20 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.paho.android.sample.R;
 import org.eclipse.paho.android.sample.internal.Connections;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 
@@ -34,10 +44,11 @@ public class PublishFragment extends Fragment {
     String message = "Hello world";
      public int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
      public int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;
-     public int ctrlBot1, ctrlBot2, ctrlBot3, manualCtrlEn;
+    public int ctrlBot1, ctrlBot2, ctrlBot3, manualCtrlEn;
      public int autoCtrlSw, manCtrlSw;
      public int checkTime1 = 0, checkTime2 = 0, checkTim3 = 0;
      public int selectBot1=0, selectBot2=0, selectBot3=0;
+     public String espServer = "http://192.168.4.1";
 
 
     public PublishFragment() {
@@ -864,6 +875,12 @@ public class PublishFragment extends Fragment {
                 Toast.makeText(getActivity(), jsonObject.toString(), Toast.LENGTH_SHORT).show();
                // Toast.makeText(getActivity(), "Bang Nguyen", Toast.LENGTH_SHORT).show();
                 ((MainActivity) getActivity()).publish(connection, topic, jsonObject.toString(), selectedQos, retainValue);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new sendData().execute(espServer,jsonObject.toString());
+                    }
+                });
             }
         });
 
@@ -872,6 +889,41 @@ public class PublishFragment extends Fragment {
         return rootView;
     }
 
+
+    /*// Khoa Pham copyright by Bang NGuyen
+    private String makePostRequest() {
+        HttpClient httpClient = new DefaultHttpClient();
+
+        // URL của trang web nhận request
+        HttpPost httpPost = new HttpPost("http://192.168.4.1");
+
+        // Các tham số truyền
+        List nameValuePair = new ArrayList(2);
+        nameValuePair.add(new BasicNameValuePair("so1", "111"));
+        nameValuePair.add(new BasicNameValuePair("so2", "222"));
+
+        //Encoding POST data
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String kq = "";
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            kq = EntityUtils.toString(entity);
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return kq;
+    }
+    //
+    */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -883,4 +935,81 @@ public class PublishFragment extends Fragment {
     }
 
 
+
+    public static String POST(String url, String dataControl){
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+
+            String json = dataControl;
+            // 3. build jsonObject
+            // 4. convert JSONObject to JSON to String
+            //json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class sendData extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+            return POST(urls[0], jsonObject.toString());
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getActivity(), "Data Sent!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
 }
+
+
+
+
