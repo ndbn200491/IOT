@@ -45,6 +45,17 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1/libraries/ESP8266WebServer}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1/libraries/ESP8266WebServer/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/core/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WebServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WebServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/PubSubClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/PubSubClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ArduinoJson}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ArduinoJson/src}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.arduino.compiler.cpp.sketch.input.1279938443" name="CPP source files" superClass="it.baeyens.arduino.compiler.cpp.sketch.input"/>
 							</tool>
@@ -76,6 +87,17 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1/libraries/ESP8266WebServer}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1/libraries/ESP8266WebServer/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/core/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WebServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WebServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/PubSubClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/PubSubClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ArduinoJson}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IOTSmartToolV1_1/libraries/ArduinoJson/src}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.arduino.compiler.c.sketch.input.117906632" name="C Source Files" superClass="it.baeyens.arduino.compiler.c.sketch.input"/>
 							</tool>
@@ -128,9 +150,43 @@
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
+		<cconfiguration id="it.baeyens.arduino.core.toolChain.release.1879149475">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="it.baeyens.arduino.core.toolChain.release.1879149475" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildProperties="" id="it.baeyens.arduino.core.toolChain.release.1879149475" name="Release" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="it.baeyens.arduino.core.toolChain.release.1879149475.1555921720" name="/" resourcePath="">
+						<toolChain id="it.baeyens.arduino.core.toolChain.release.118698341" name="Arduino Toolchain" superClass="it.baeyens.arduino.core.toolChain.release">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="it.baeyens.arduino.targetplatform.529907496" name="Arduino Target" osList="all" superClass="it.baeyens.arduino.targetplatform"/>
+							<builder buildPath="${workspace_loc:/IOTSmartToolV1_1}/Release" id="it.baeyens.arduino.sketch.builder.953340192" managedBuildOn="true" name="Arduino sketch builder.Release" superClass="it.baeyens.arduino.sketch.builder"/>
+							<tool id="it.baeyens.arduino.tool.sketch.compiler.cpp.1090166242" name="Arduino C++ Compiler" superClass="it.baeyens.arduino.tool.sketch.compiler.cpp">
+								<inputType id="it.baeyens.arduino.compiler.cpp.sketch.input.10551502" name="CPP source files" superClass="it.baeyens.arduino.compiler.cpp.sketch.input"/>
+							</tool>
+							<tool id="it.baeyens.arduino.tool.compiler.c.1247824901" name="Arduino C Compiler" superClass="it.baeyens.arduino.tool.compiler.c">
+								<inputType id="it.baeyens.arduino.compiler.c.sketch.input.2045163313" name="C Source Files" superClass="it.baeyens.arduino.compiler.c.sketch.input"/>
+							</tool>
+							<tool id="it.baeyens.arduino.tool.sketch.compiler.s.210256143" name="Arduino Assembler" superClass="it.baeyens.arduino.tool.sketch.compiler.s"/>
+							<tool id="it.baeyens.arduino.tool.ar.178378373" name="Arduino archiver" superClass="it.baeyens.arduino.tool.ar"/>
+							<tool id="it.baeyens.arduino.tool.combine.1689565919" name="Arduino combiner" superClass="it.baeyens.arduino.tool.combine"/>
+							<tool id="it.baeyens.arduino.tool.objcopy.eep.1401006182" name="Arduino tool Create eeprom" superClass="it.baeyens.arduino.tool.objcopy.eep"/>
+							<tool id="it.baeyens.arduino.tool.objcopy.flash.805015256" name="Arduino tool Create hex" superClass="it.baeyens.arduino.tool.objcopy.flash"/>
+							<tool id="it.baeyens.arduino.tool.size.1935669213" name="Arduino tool Print Size" superClass="it.baeyens.arduino.tool.size"/>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="IOTSmartToolV1.null.1622852057" name="IOTSmartToolV1"/>
+		<project id="IOTSmartToolV1_1.null.1675657113" name="IOTSmartToolV1_1"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>

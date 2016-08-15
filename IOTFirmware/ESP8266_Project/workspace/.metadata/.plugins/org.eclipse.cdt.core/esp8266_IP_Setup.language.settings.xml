@@ -717,9 +717,6 @@
 					<entry kind="includePath" name="C:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lwip/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="/${ProjName}/#undef __STRICT_ANSI__">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH"/>
-					</entry>
 					<entry kind="includePath" name="C:/eclipseArduino/arduinoPlugin/tools/esp8266/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/xtensa-lx106-elf/include/c++/4.8.2">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>

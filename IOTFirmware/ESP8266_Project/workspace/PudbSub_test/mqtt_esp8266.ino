@@ -201,9 +201,14 @@ void callback(char* topic, byte* payload, unsigned int length) {
   appDataRx.ctrlBot2  = rootRx["ctrlBot2"];
   appDataRx.ctrlBot3  = rootRx["ctrlBot3"];
   appDataRx.ctrlMode  = rootRx["ctrlMode"];
-
- uint16_t bien = (uint16_t)appDataRx.ctrAppData[0]+((uint16_t)appDataRx.ctrAppData[1]<<8);
-
+delay(200);
+// uint16_t bien = (uint16_t)appDataRx.ctrAppData[0]+((uint16_t)appDataRx.ctrAppData[1]<<8);
+ //Serial.println(bien);
+ Serial.println(appDataRx.time1Bot1On);
+ Serial.print(appDataRx.time1Bot1On);
+ Serial.println("");
+ Serial.println(appDataRx.time1Bot2On);
+ Serial.println(appDataRx.time1Bot3On);
 //Serial.println(appDataRx.ctrlBot1);
 //Serial.println(appDataRx.ctrlBot2);
 //Serial.println( appDataRx.ctrlBot3);

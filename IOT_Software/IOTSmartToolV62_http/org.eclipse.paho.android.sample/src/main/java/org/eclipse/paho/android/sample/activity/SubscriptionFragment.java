@@ -192,7 +192,6 @@ btnRefresh.setOnClickListener(new View.OnClickListener() {
             PHData.setText(this.getArguments().getString("PHData")+ "(+/-)");
         } */
 
-
         ListView subscriptionListView = (ListView) rootView.findViewById(R.id.subscription_list_view);
         adapter = new SubscriptionListItemAdapter(this.getActivity(), subscriptions);
 
@@ -240,7 +239,6 @@ btnRefresh.setOnClickListener(new View.OnClickListener() {
         protected void onPostExecute(String s) {
             //super.onPostExecute(s);
             Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-
         }
     }
 

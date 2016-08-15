@@ -36,7 +36,7 @@ Bnag Nguyen
 // Update these with values suitable for your network.
 
 const char* ssid = "AP_cisco";
-const char* password = "Chantroiviet@2014";
+const char* password = "Chantroiviet@201";
 const char* mqtt_server = "broker.mqtt-dashboard.com";
 const char* ssid_ap = "greenturaHost";
 const char* pass_ap = "12345678" ;
@@ -44,14 +44,17 @@ const char* pass_ap = "12345678" ;
 int cntStatus= 0;
 ESP8266WebServer server(80);
 WiFiClient espClient;
+WiFiServer espServer(80);
 PubSubClient client(espClient);
 String content;
 
 long lastMsg = 0;
 char msg[50];
- char MqttMes[300];
+String httpMsgPayload ;
+char MqttMes[300];
 int value = 0;
 int is = 0  ;
+
 
 StaticJsonBuffer<300> jsonBuffer;
 
@@ -125,6 +128,7 @@ void MqttMessageUpdate(){
 	root.printTo(MqttMes, 200);
 	root.end();
 	is++;
+
 	//root.operator [](MqttMes);
 
 }
@@ -143,7 +147,7 @@ void setup() {
   root["time"] = 14378434;
   //data.add(48.756080, 6);  // 6 is the number of decimals to print
  // data.add(2.302038, 6);   // if not specified, 2 digits are printed
-  root.printTo(Serial);
+ // root.printTo(Serial);
 }
 
 
@@ -172,26 +176,22 @@ void setup_wifi() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.softAP(ssid_ap, pass_ap);
+  espClient = espServer.available();
   wifiConnect();
   if(cntStatus == 0){
-
-	  server.on("/", []() {
-	  	      IPAddress ip = WiFi.localIP();
-	  	      String ipStr = MqttMes;//String(ip[0]) + '.' + String(ip[1]) + '.' + String(ip[2]) + '.' + String(ip[3]);
-	  	      server.send(200, "application/json", "{\"IP\":\"" + ipStr + "\"}");
-	  	    });
-
-	  server.on("/cleareeprom", []() {
-	        content = "<!DOCTYPE HTML>\r\n<html>";
-	        content += "<p>Clearing the EEPROM</p></html>";
-	        server.send(200, "text/html", content);
-	        Serial.println("clearing eeprom");
-	        for (int i = 0; i < 96; ++i) { EEPROM.write(i, 0); }
-	        EEPROM.commit();
-	      });
+	  espServer.begin();
+	  delay(500);
+	  while(!espServer.available())
+	  espClient = espServer.available();
+	  delay(10);
+	  espClient.println("HTTP/1.1 200 OK");
+	  espClient.println("Content-Type: text/html");
+	  espClient.println(""); //  do not forget ths one
+	  espClient.println("<!DOCTYPE HTML>");
+  	  }
+ }
 
 
-  }
   /*WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -204,9 +204,9 @@ void setup_wifi() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   */
-  server.begin();
+  //server.begin();
 
-}
+
 
 void callback(char* topic, byte* payload, unsigned int length) {
   //Serial.print("Message arrived [");
@@ -332,46 +332,122 @@ void readSerial() // baud = 115200
 
 }
 
-
-
 void loop() {
-	MqttMessageUpdate();
-if(cntStatus == 1){
-readSerial();
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
-
-  long now = millis();
-  if (now - lastMsg > 3000) {
-    lastMsg = now;
-    ++value;
-   // snprintf (msg, 75, "Bang Nguyen #%ld", value);
-   // Serial.print("Publish message: ");
-    //MqttMessageUpdate();
-   // Serial.println(msg);
-   // root["sensor"] = "Humidity";
-   // root["time"] = 14378434;
-    //root.printTo(Serial);
-    //Serial.println(jsonRx);
-   // Serial.println("");
-   // Serial.println(MqttMes);
-    client.publish("greenturaClient", MqttMes);
-  }
+  MqttMessageUpdate();
+  if(cntStatus == 1){ // Mqtt
+	 readSerial();
+	  if (!client.connected()) {
+		  reconnect();
+	  }
+	  client.loop();
+	  long now = millis();
+	  if (now - lastMsg > 3000) {
+		lastMsg = now;
+		++value;
+		// snprintf (msg, 75, "Bang Nguyen #%ld", value);
+		client.publish("greenturaClient", MqttMes);
+	  }
 }
+	else{ // http local server open
+		delay(500);
 
-else{ // http local server open
-	delay(500);
-	 server.on("/", []() {
-		  	      IPAddress ip = WiFi.localIP();
-		  	      String ipStr = MqttMes;//String(ip[0]) + '.' + String(ip[1]) + '.' + String(ip[2]) + '.' + String(ip[3]);
-		  	      server.send(200, "application/json", "{\"IP\":\"" + ipStr + "\"}");
-		  	    });
+		espClient = espServer.available();
+	if (!espClient) {
+	    return;
+	  }
+
+
+ // Wait until the client sends some data
+
+	//Serial.println("new client");
+	while(!espClient.available()){
+		for(int i = 0; i< 10; i++){
+		delay(10);
+		}
+	}
+	 espClient.println("HTTP/1.1 200 OK");
+		  espClient.println("Content-Type: text/html");
+		  espClient.println(""); //  do not forget ths one
+		  espClient.println(MqttMes);
+
+	//espServer.send(200, "application/json", "{\"IP\":\"" + MqttMes + "\"}");
+	 // Read the first line of the request
+	 String request = espClient.readStringUntil('\r');
+	 //Serial.println(request);
+	 String request1 = espClient.readStringUntil('\r');
+	 //Serial.println(request1);
+	 String request2 = espClient.readStringUntil('\r');
+	 //Serial.println(request2);
+	 String request3 = espClient.readStringUntil('\r');
+	// Serial.println(request3);
+	 String request4 = espClient.readStringUntil('\r');
+	// Serial.println(request4);
+	 String request5 = espClient.readStringUntil('\r');
+	 //Serial.println(request5);
+
+	 String request6 = espClient.readStringUntil('\r');
+	 //Serial.println(request6);
+	 String request7 = espClient.readStringUntil('\r');
+	 //Serial.println(request7);
+	 httpMsgPayload = espClient.readStringUntil('\r');
+	 Serial.println(httpMsgPayload);
+	// String request9 = espClient.readStringUntil('\r');
+	 //Serial.println(request9);
+	  char* jsonRx = (char*)httpMsgPayload.c_str();
+	  Serial.print((const char* )jsonRx);
+	 StaticJsonBuffer<500> jsonRxBufferHttp;
+	 JsonObject& rootRxHttp = jsonRxBufferHttp.parseObject(jsonRx);
+
+	 appDataRx.time1Bot1On = rootRxHttp["time1Bot1On"];
+	 appDataRx.time1Bot2On = rootRxHttp["time1Bot2On"];
+	 appDataRx.time1Bot3On = rootRxHttp["time1Bot3On"];
+	 appDataRx.time2Bot1On = rootRxHttp["time2Bot1On"];
+	 appDataRx.time2Bot2On = rootRxHttp["time2Bot2On"];
+	 appDataRx.time2Bot3On = rootRxHttp["time2Bot3On"];
+	 appDataRx.time3Bot1On = rootRxHttp["time3Bot1On"];
+	 appDataRx.time3Bot2On = rootRxHttp["time3Bot2On"];
+	 appDataRx.time3Bot3On = rootRxHttp["time3Bot3On"];
+	 appDataRx.time1Bot1Off = rootRxHttp["time1Bot1Off"];
+	 appDataRx.time1Bot2Off = rootRxHttp["time1Bot2Off"];
+	 appDataRx.time1Bot3Off = rootRxHttp["time1Bot3Off"];
+	 appDataRx.time2Bot1Off = rootRxHttp["time2Bot1Off"];
+	 appDataRx.time2Bot2Off = rootRxHttp["time2Bot2Off"];
+	 appDataRx.time2Bot3Off = rootRxHttp["time2Bot3Off"];
+	 appDataRx.time3Bot1Off = rootRxHttp["time3Bot1Off"];
+	 appDataRx.time3Bot2Off = rootRxHttp["time3Bot2Off"];
+	 appDataRx.time3Bot3Off = rootRxHttp["time3Bot3Off"];
+	 appDataRx.ctrlBot1  = rootRxHttp["ctrlBot1"];
+	 appDataRx.ctrlBot2  = rootRxHttp["ctrlBot2"];
+	 appDataRx.ctrlBot3  = rootRxHttp["ctrlBot3"];
+	 appDataRx.ctrlMode  = rootRxHttp["ctrlMode"];
+	 //uint16_t bien = (uint16_t)appDataRx.ctrAppData[0]+((uint16_t)appDataRx.ctrAppData[1]<<8);
+	// Serial.println(appDataRx.time1Bot1On);
+	// Serial.println(appDataRx.time1Bot2On);
+	 //Serial.println(appDataRx.time1Bot3On);
+	 //Serial.println(appDataRx.ctrlBot1);
+	 //Serial.println(appDataRx.ctrlBot2);
+	 //Serial.println( appDataRx.ctrlBot3);
+	  //Serial.println((const char*)appDataRx.ctrAppData);
+	 // Serial.print(appDataRx.ctrAppData);
+	 // Serial.print((const char*)appDataRx.ctrAppData);
+	   //Serial.println(appDataRx.time1Bot1);
+	  for(int i = 0; i <40; i++){
+
+	   Serial.print(appDataRx.ctrAppData[i]);
+	  }
+
+
+
+
+    //String abc = espClient.readStringUntil('\r\r');
+  //  String request = espClient.readStringUntil('\r');
+//String request = espClient.readString();
+//espClient.
+    //Serial.println(request);
 	server.handleClient();
 
-}
 
+}
 }
 
 

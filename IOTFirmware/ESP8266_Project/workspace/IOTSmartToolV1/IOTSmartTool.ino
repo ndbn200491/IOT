@@ -43,7 +43,9 @@ const char* pass_ap = "12345678" ;
 //const char* mqtt_server = "broker.hivemq.com";
 int cntStatus= 0;
 ESP8266WebServer server(80);
+WiFiServer espServer(80);
 WiFiClient espClient;
+WiFiClient httpClient;
 PubSubClient client(espClient);
 String content;
 
@@ -134,6 +136,7 @@ void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   Serial.begin(115200);
   setup_wifi();
+
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
   //dataTransfer.ctrData[2] = 5;
@@ -335,7 +338,8 @@ void readSerial() // baud = 115200
 
 
 void loop() {
-	MqttMessageUpdate();
+MqttMessageUpdate();
+WiFiClient client = espClient.available();
 if(cntStatus == 1){
 readSerial();
   if (!client.connected()) {
@@ -363,12 +367,32 @@ readSerial();
 
 else{ // http local server open
 	delay(500);
-	 server.on("/", []() {
+
+
+	server.on("/", []() {
 		  	      IPAddress ip = WiFi.localIP();
 		  	      String ipStr = MqttMes;//String(ip[0]) + '.' + String(ip[1]) + '.' + String(ip[2]) + '.' + String(ip[3]);
 		  	      server.send(200, "application/json", "{\"IP\":\"" + ipStr + "\"}");
 		  	    });
+
 	server.handleClient();
+
+	  if (!httpClient) {
+	    return;
+	  }
+
+
+	  // Wait until the client sends some data
+	  Serial.println("new client");
+	  while(!httpClient.available()){
+	    delay(1);
+	  }
+
+	  // Read the first line of the request
+	  String request = httpClient.readStringUntil('\r');
+	  Serial.println(request);
+	  Serial.println("looping...\n\r");
+
 
 }
 

@@ -1,4 +1,4 @@
-14:09:33 **** Incremental Build of configuration Release for project ControlLed ****
+19:31:21 **** Incremental Build of configuration Release for project ControlLed ****
 "C:\\eclipseArduino\\arduinoPlugin\\tools\\make\\make" all 
 Building file: ../.ino.cpp
 Starting C++ compile
@@ -17,85 +17,41 @@ In file included from ../.ino.cpp:12:0:
 ../ControlLed.ino:44:13: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
    espStatus ="online";
              ^
+In file included from ../.ino.cpp:12:0:
 ../ControlLed.ino: In function 'void loop()':
+../ControlLed.ino:268:20: error: no matching function for call to 'WiFiClient::findUntil()'
+   client.findUntil()
+                    ^
+../ControlLed.ino:268:20: note: candidates are:
+In file included from C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/HardwareSerial.h:31:0,
+                 from C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Arduino.h:246,
+                 from ../.ino.cpp:7:
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:74:14: note: bool Stream::findUntil(const char*, const char*)
+         bool findUntil(const char *target, const char *terminator);   // as find but search ends if the terminator string is found
+              ^
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:74:14: note:   candidate expects 2 arguments, 0 provided
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:75:14: note: bool Stream::findUntil(const uint8_t*, const char*)
+         bool findUntil(const uint8_t *target, const char *terminator) {
+              ^
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:75:14: note:   candidate expects 2 arguments, 0 provided
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:79:14: note: bool Stream::findUntil(const char*, size_t, const char*, size_t)
+         bool findUntil(const char *target, size_t targetLen, const char *terminate, size_t termLen);   // as above but search ends if the terminate string is found
+              ^
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:79:14: note:   candidate expects 4 arguments, 0 provided
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:80:14: note: bool Stream::findUntil(const uint8_t*, size_t, const char*, size_t)
+         bool findUntil(const uint8_t *target, size_t targetLen, const char *terminate, size_t termLen) {
+              ^
+C:\eclipseArduino\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/Stream.h:80:14: note:   candidate expects 4 arguments, 0 provided
+In file included from ../.ino.cpp:12:0:
+../ControlLed.ino:270:1: error: expected ';' before '}' token
+ }
+ ^
+In file included from ../.ino.cpp:12:0:
 ../ControlLed.ino:61:6: warning: unused variable 'ndString' [-Wunused-variable]
   int ndString;
       ^
-../ControlLed.ino:86:7: warning: variable 'value' set but not used [-Wunused-but-set-variable]
-   int value = LOW;
-       ^
-Finished building: ../.ino.cpp
- 
-Starting combiner
-"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lib" "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/ld" "-Teagle.flash.4m1m.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy  -o "C:/eclipseArduino/ControlLed/Release/ControlLed.elf" -Wl,--start-group    ./.ino.cpp.o  ./libraries/ESP8266WiFi/src/ESP8266WiFi.cpp.o ./libraries/ESP8266WiFi/src/ESP8266WiFiAP.cpp.o ./libraries/ESP8266WiFi/src/ESP8266WiFiGeneric.cpp.o ./libraries/ESP8266WiFi/src/ESP8266WiFiMulti.cpp.o ./libraries/ESP8266WiFi/src/ESP8266WiFiSTA.cpp.o ./libraries/ESP8266WiFi/src/ESP8266WiFiScan.cpp.o ./libraries/ESP8266WiFi/src/WiFiClient.cpp.o ./libraries/ESP8266WiFi/src/WiFiClientSecure.cpp.o ./libraries/ESP8266WiFi/src/WiFiServer.cpp.o ./libraries/ESP8266WiFi/src/WiFiUdp.cpp.o  ./internal/zero/ParseClient.cpp.o ./internal/zero/ParsePush.cpp.o ./internal/zero/ParseResponse.cpp.o  ./internal/yun/ParseClient.cpp.o ./internal/yun/ParsePlatformSupport.cpp.o ./internal/yun/ParsePush.cpp.o ./internal/yun/ParseResponse.cpp.o  ./internal/esp8266/ParseClient.cpp.o ./internal/esp8266/ParsePush.cpp.o ./internal/esp8266/ParseResponse.cpp.o  ./internal/ParseCloudFunction.cpp.o ./internal/ParseObjectCreate.cpp.o ./internal/ParseObjectDelete.cpp.o ./internal/ParseObjectGet.cpp.o ./internal/ParseObjectUpdate.cpp.o ./internal/ParseQuery.cpp.o ./internal/ParseRequest.cpp.o ./internal/ParseTrackEvent.cpp.o  ./external/FlashStorage/FlashStorage.cpp.o   arduino.ar   "C:/eclipseArduino/ControlLed/Release/arduino.ar" -lm -lgcc -lhal -lphy -lpp -lnet80211 -lwpa -lcrypto -lmain -lwps -laxtls -lsmartconfig -lmesh -lwpa2 -llwip -Wl,--end-group  "-LC:/eclipseArduino/ControlLed/Release"
-Finished building: ControlLed.elf
- 
-Create eeprom image
-Finished building: ControlLed.eep
- 
-Create Flash image (ihex format)
-"C:\eclipseArduino\arduinoPlugin\tools\esp8266\esptool\0.4.8/esptool.exe" -eo "C:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/bootloaders/eboot/eboot.elf" -bo "C:/eclipseArduino/ControlLed/Release/ControlLed.bin" -bm dio -bf 80 -bz 4M -bs .text -bp 4096 -ec -eo "C:/eclipseArduino/ControlLed/Release/ControlLed.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
-Finished building: ControlLed.bin
- 
-Building target: ControlLed
-Printing size:
-"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "C:/eclipseArduino/ControlLed/Release/ControlLed.elf"
-C:/eclipseArduino/ControlLed/Release/ControlLed.elf  :
-section                                                     size         addr
-.data                                                        920   1073643520
-.rodata                                                     9568   1073644448
-.bss                                                       30424   1073654016
-.irom0.text                                               235136   1075843088
-.text                                                      30237   1074790400
-.debug_frame                                               27984            0
-.debug_info                                               551643            0
-.debug_abbrev                                              73620            0
-.debug_loc                                                151073            0
-.debug_aranges                                              8280            0
-.debug_ranges                                              17272            0
-.debug_line                                               164914            0
-.debug_str                                                 76979            0
-.comment                                                    8920            0
-.xtensa.info                                                  56            0
-.xt.lit._ZN13ClientContext8_s_errorEPva                        8            0
-.xt.lit._ZN13ClientContext7_s_sentEPvP7tcp_pcbt                8            0
-.xt.lit._ZN13ClientContext7_s_recvEPvP7tcp_pcbP4pbufa          8            0
-.xt.lit._ZN13ClientContext5flushEv                             0            0
-.xt.lit._ZN13ClientContext5unrefEv                             8            0
-.xt.lit._ZN13ClientContext5writeEPKcj                          8            0
-.xt.lit._ZN13ClientContext8_consumeEj                          8            0
-.xt.prop._ZN6Stream9readBytesEPhj                             36            0
-.xt.prop._ZN13ClientContext8_s_errorEPva                      36            0
-.xt.prop._ZN13ClientContext7_s_sentEPvP7tcp_pcbt              36            0
-.xt.prop._ZN13ClientContext7_s_recvEPvP7tcp_pcbP4pbufa        96            0
-.xt.prop._ZN13ClientContext5flushEv                           60            0
-.xt.prop._ZN13ClientContext5unrefEv                           60            0
-.xt.prop._ZN13ClientContext5writeEPKcj                        72            0
-.xt.prop._ZN13ClientContext8_consumeEj                        96            0
-.xt.prop._ZTV10WiFiClient                                     12            0
-.xt.lit._ZN13ClientContext4readEPcj                            8            0
-.xt.lit._ZN10SSLContext5unrefEv                                8            0
-.xt.lit._ZN10SSLContext8_readAllEv                             8            0
-.xt.lit._ZN10SSLContext9availableEv                            0            0
-.xt.prop._ZN13ClientContext4readEPcj                         156            0
-.xt.prop._ZN10SSLContext5unrefEv                              48            0
-.xt.prop._ZN10SSLContext8_readAllEv                           96            0
-.xt.prop._ZN10SSLContext9availableEv                          60            0
-.xt.prop._ZTV16WiFiClientSecure                               12            0
-.xt.prop._ZTV10WiFiServer                                     12            0
-.xt.lit._ZN14HardwareSerialD2Ev                                8            0
-.xt.lit._ZN14HardwareSerialD0Ev                                0            0
-.xt.prop._ZN14HardwareSerialD2Ev                              36            0
-.xt.prop._ZN14HardwareSerialD0Ev                              36            0
-.xt.prop._ZTV14HardwareSerial                                 12            0
-.xt.prop._ZTV9IPAddress                                       12            0
-.xt.lit._ZN5Print5writeEPKc                                    0            0
-.xt.prop._ZN5Print5writeEPKc                                  48            0
-Total                                                    1388138
+subdir.mk:24: recipe for target '.ino.cpp.o' failed
+make: *** [.ino.cpp.o] Error 1
 
-
-Finished building target: ControlLed
- 
-
-14:09:36 Build Finished (took 3s.336ms)
+19:31:22 Build Finished (took 719ms)
 

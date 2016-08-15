@@ -32,12 +32,12 @@ public class PublishFragment extends Fragment {
     boolean retainValue = false;
     String topic = "d1";
     String message = "Hello world";
-     public int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
-     public int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;
+    public int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
+    public int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;
     public int ctrlBot1, ctrlBot2, ctrlBot3, manualCtrlEn;
-     public int autoCtrlSw, manCtrlSw;
-     public int checkTime1 = 0, checkTime2 = 0, checkTim3 = 0;
-     public int selectBot1=0, selectBot2=0, selectBot3=0;
+    public int autoCtrlSw, manCtrlSw, ctrlMode;
+    public int checkTime1 = 0, checkTime2 = 0, checkTim3 = 0;
+    public int selectBot1=0, selectBot2=0, selectBot3=0;
 
 
     public PublishFragment() {
@@ -77,7 +77,7 @@ public class PublishFragment extends Fragment {
         Switch CtrlBot1 = (Switch) rootView.findViewById(R.id.ctrlBot1);
         Switch CtrlBot2 = (Switch) rootView.findViewById(R.id.ctrlBot2);
         Switch CtrlBot3 = (Switch) rootView.findViewById(R.id.ctrlBot3);
-        Switch ManualCtrlEn = (Switch) rootView.findViewById(R.id.switch_manual_control);
+       // Switch ManualCtrlEn = (Switch) rootView.findViewById(R.id.switch_manual_control);
 
 
 
@@ -555,16 +555,7 @@ public class PublishFragment extends Fragment {
 
             }
         });
-        ManualCtrlEn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    manualCtrlEn = 1;
-                }else{
-                    manualCtrlEn = 0;
-                }
-            }
-        });
+
         /*checkBoxTime1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -729,112 +720,113 @@ public class PublishFragment extends Fragment {
                 int time1Off = time1Offh + time1Offm;
                 int time2Off = time2Offh + time2Offm;
                 int time3Off = time3Offh + time3Offm;
+                if(autoCtrlSw == 1) {
+                    if (checkBoxSelectBot1.isChecked()) {
+                        if (checkBoxTime1.isChecked()) {
 
-                if(checkBoxSelectBot1.isChecked()){
-                    if(checkBoxTime1.isChecked()) {
-
-                        try {
-                            jsonObject.put("time1Bot1On", time1On);
-                            jsonObject.put("time1Bot1Off", time1Off);
+                            try {
+                                jsonObject.put("time1Bot1On", time1On);
+                                jsonObject.put("time1Bot1Off", time1Off);
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (checkBoxTime2.isChecked()) {
+
+
+                            try {
+
+                                jsonObject.put("time2Bot1On", time2On);
+                                jsonObject.put("time2Bot1Off", time2Off);
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (checkBoxTime3.isChecked()) {
+
+                            try {
+
+                                jsonObject.put("time3Bot1", time3On);
+                                jsonObject.put("time3Bot1Off", time3Off);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                    if(checkBoxTime2.isChecked()) {
+                    if (checkBoxSelectBot2.isChecked()) {
+                        if (checkBoxTime1.isChecked()) {
+
+                            try {
+                                jsonObject.put("time1Bot2On", time1On);
+                                jsonObject.put("time1Bot2Off", time1Off);
 
 
-                        try {
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (checkBoxTime2.isChecked()) {
+                            try {
 
-                            jsonObject.put("time2Bot1On", time2On);
-                            jsonObject.put("time2Bot1Off", time2Off);
+                                jsonObject.put("time2Bot2On", time2On);
+                                jsonObject.put("time2Bot2Off", time2Off);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (checkBoxTime3.isChecked()) {
+                            try {
 
+                                jsonObject.put("time3Bot2", time3On);
+                                jsonObject.put("time3Bot2Off", time3Off);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                    if(checkBoxTime3.isChecked()) {
 
-                        try {
+                    if (checkBoxSelectBot3.isChecked()) {
+                        if (checkBoxTime1.isChecked()) {
+                            try {
+                                jsonObject.put("time1Bot3On", time1On);
 
-                            jsonObject.put("time3Bot1", time3On);
-                            jsonObject.put("time3Bot1Off", time3Off);
+                                jsonObject.put("time1Bot3Off", time1Off);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (checkBoxTime2.isChecked()) {
+                            try {
+
+                                jsonObject.put("time2Bot3On", time2On);
+                                jsonObject.put("time2Bot3Off", time2Off);
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (checkBoxTime3.isChecked()) {
+                            try {
+
+                                jsonObject.put("time3Bot3On", time3On);
+                                jsonObject.put("time3Bot3Off", time3Off);
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
-               if(checkBoxSelectBot2.isChecked()){
-                    if(checkBoxTime1.isChecked()) {
 
-                        try {
-                            jsonObject.put("time1Bot2On", time1On);
-                            jsonObject.put("time1Bot2Off",time1Off);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(checkBoxTime2.isChecked()) {
-                        try {
-
-                            jsonObject.put("time2Bot2On", time2On);
-                            jsonObject.put("time2Bot2Off",time2Off);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(checkBoxTime3.isChecked()) {
-                        try {
-
-                            jsonObject.put("time3Bot2", time3On);
-                            jsonObject.put("time3Bot2Off",time3Off);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                if(checkBoxSelectBot3.isChecked()){
-                    if(checkBoxTime1.isChecked()) {
-                        try {
-                            jsonObject.put("time1Bot3On", time1On);
-
-                            jsonObject.put("time1Bot3Off", time1Off);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(checkBoxTime2.isChecked()) {
-                        try {
-
-                            jsonObject.put("time2Bot3On", time2On);
-                            jsonObject.put("time2Bot3Off", time2Off);
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(checkBoxTime3.isChecked()) {
-                        try {
-
-                            jsonObject.put("time3Bot3On", time3On);
-                            jsonObject.put("time3Bot3Off", time3Off);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
                /* if(checkBoxSelectBot2.isChecked()&&checkBoxTime2.isChecked()){
                     try {
                         jsonObject.put("time2", time2);
@@ -858,10 +850,17 @@ public class PublishFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
+                ctrlMode = autoCtrlSw*2 + manCtrlSw ;
+                // put the the control mode to json object
+                try {
+                    jsonObject.put("ctrlMode", ctrlMode);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 /*System.out.println("Publising: [topic: " + topic + ", message: " + message + ", QoS: " + selectedQos + ", Retain: " + retainValue + "]");
                 ((MainActivity) getActivity()).publish(connection, topic, message, selectedQos, retainValue); */
                 Log.d( "The publish message", jsonObject.toString());
-                Toast.makeText(getActivity(), jsonObject.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), jsonObject.toString(), Toast.LENGTH_SHORT).show();
                // Toast.makeText(getActivity(), "Bang Nguyen", Toast.LENGTH_SHORT).show();
                 ((MainActivity) getActivity()).publish(connection, topic, jsonObject.toString(), selectedQos, retainValue);
             }

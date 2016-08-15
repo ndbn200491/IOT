@@ -76,19 +76,19 @@ all: PudbSub_test
 PudbSub_test: $(FLASH_IMAGE)
 	@echo 'Building target: $@'
 	@echo 'Printing size:'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "D:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.elf"
+	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "D:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.elf"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 arduino.ar: $(AR_OBJ)
 	@echo 'Starting archiver'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-ar" cru  "D:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release/arduino.ar"    arduino.ar $(AR_OBJ)
+	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-ar" cru  "D:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release/arduino.ar"    arduino.ar $(AR_OBJ)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 PudbSub_test.elf: $(LINK_OBJ) $(AR)
 	@echo 'Starting combiner'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lib" "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/ld" "-Teagle.flash.4m1m.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy  -o "D:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.elf" -Wl,--start-group   $(LINK_OBJ) $(AR)  "D:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release/arduino.ar" -lm -lgcc -lhal -lphy -lpp -lnet80211 -lwpa -lcrypto -lmain -lwps -laxtls -lsmartconfig -lmesh -lwpa2 -llwip -Wl,--end-group  "-LD:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release"
+	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lib" "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/ld" "-Teagle.flash.4m1m.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy  -o "D:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.elf" -Wl,--start-group   $(LINK_OBJ) $(AR)  "D:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release/arduino.ar" -lm -lgcc -lhal -lphy -lpp -lnet80211 -lwpa -lcrypto -lmain -lwps -laxtls -lsmartconfig -lmesh -lwpa2 -llwip -Wl,--end-group  "-LD:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release"
 	@echo 'Finished building: $@'
 	@echo ' '
 
@@ -100,7 +100,7 @@ PudbSub_test.eep: $(ELF)
 
 PudbSub_test.bin: $(EEP)
 	@echo 'Create Flash image (ihex format)'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\esptool\0.4.8/esptool.exe" -eo "C:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/bootloaders/eboot/eboot.elf" -bo "D:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.bin" -bm qio -bf 40 -bz 4M -bs .text -bp 4096 -ec -eo "D:/Working/IOT/IOT_Firmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
+	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\esptool\0.4.8/esptool.exe" -eo "C:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/bootloaders/eboot/eboot.elf" -bo "D:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.bin" -bm qio -bf 40 -bz 4M -bs .text -bp 4096 -ec -eo "D:/Working/IOT/IOTFirmware/ESP8266_Project/workspace/PudbSub_test/Release/PudbSub_test.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
 	@echo 'Finished building: $@'
 	@echo ' '
 

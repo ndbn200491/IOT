@@ -44,7 +44,7 @@ public class PublishFragment extends Fragment {
     String message = "Hello world";
      public int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
      public int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;
-    public int ctrlBot1, ctrlBot2, ctrlBot3, manualCtrlEn;
+      public int ctrlBot1, ctrlBot2, ctrlBot3, manualCtrlEn;
      public int autoCtrlSw, manCtrlSw;
      public int checkTime1 = 0, checkTime2 = 0, checkTim3 = 0;
      public int selectBot1=0, selectBot2=0, selectBot3=0;
