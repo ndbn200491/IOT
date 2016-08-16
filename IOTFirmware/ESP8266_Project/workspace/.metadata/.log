@@ -8715,3 +8715,67 @@ java.lang.Exception
 java.lang.Exception
 	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
 	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)
+
+!ENTRY it.baeyens.arduino.core 2 0 2016-08-16 09:32:19.619
+!MESSAGE Error inside Serial. Break detected
+!STACK 0
+java.lang.Exception
+	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
+	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)
+
+!ENTRY it.baeyens.arduino.core 2 0 2016-08-16 09:32:19.639
+!MESSAGE Error inside Serial. Break detected
+!STACK 0
+java.lang.Exception
+	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
+	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)
+
+!ENTRY it.baeyens.arduino.core 2 0 2016-08-16 09:32:19.741
+!MESSAGE Error inside Serial. Break detected
+!STACK 0
+java.lang.Exception
+	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
+	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)
+
+!ENTRY it.baeyens.arduino.core 2 0 2016-08-16 09:32:19.742
+!MESSAGE Error inside Serial. Break detected
+!STACK 0
+java.lang.Exception
+	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
+	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)
+
+!ENTRY it.baeyens.arduino.core 4 0 2016-08-16 09:37:22.178
+!MESSAGE Serial port COM2 not found. Did you select the right one from the project properties -> Arduino -> Arduino?
+!STACK 0
+jssc.SerialPortException: Port name - COM2; Method name - openPort(); Exception type - Port not found.
+	at jssc.SerialPort.openPort(SerialPort.java:167)
+	at it.baeyens.arduino.arduino.Serial.connect(Serial.java:170)
+	at it.baeyens.arduino.monitor.views.SerialMonitor.ResumePort(SerialMonitor.java:537)
+	at it.baeyens.arduino.common.Common.StartSerialMonitor(Common.java:248)
+	at it.baeyens.arduino.tools.uploaders.UploadSketchWrapper$UploadJobWrapper.run(UploadSketchWrapper.java:185)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY it.baeyens.arduino.core 4 0 2016-08-16 09:38:49.600
+!MESSAGE Serial port COM2 not found. Did you select the right one from the project properties -> Arduino -> Arduino?
+!STACK 0
+jssc.SerialPortException: Port name - COM2; Method name - openPort(); Exception type - Port not found.
+	at jssc.SerialPort.openPort(SerialPort.java:167)
+	at it.baeyens.arduino.arduino.Serial.connect(Serial.java:170)
+	at it.baeyens.arduino.monitor.views.SerialMonitor.ResumePort(SerialMonitor.java:537)
+	at it.baeyens.arduino.common.Common.StartSerialMonitor(Common.java:248)
+	at it.baeyens.arduino.tools.uploaders.UploadSketchWrapper$UploadJobWrapper.run(UploadSketchWrapper.java:185)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY it.baeyens.arduino.core 2 0 2016-08-16 16:03:53.611
+!MESSAGE Error inside Serial. Break detected
+!STACK 0
+java.lang.Exception
+	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
+	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)
+
+!ENTRY it.baeyens.arduino.core 2 0 2016-08-16 16:03:53.611
+!MESSAGE Error inside Serial. Break detected
+!STACK 0
+java.lang.Exception
+	at it.baeyens.arduino.arduino.Serial.serialEvent(Serial.java:280)
+	at jssc.SerialPort$EventThread.run(SerialPort.java:1112)

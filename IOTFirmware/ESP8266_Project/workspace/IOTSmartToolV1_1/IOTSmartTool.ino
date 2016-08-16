@@ -347,7 +347,7 @@ void loop() {
 		// snprintf (msg, 75, "Bang Nguyen #%ld", value);
 		client.publish("greenturaClient", MqttMes);
 	  }
-}
+  }
 	else{ // http local server open
 		delay(500);
 
@@ -365,10 +365,10 @@ void loop() {
 		delay(10);
 		}
 	}
-	 espClient.println("HTTP/1.1 200 OK");
-		  espClient.println("Content-Type: text/html");
-		  espClient.println(""); //  do not forget ths one
-		  espClient.println(MqttMes);
+	espClient.println("HTTP/1.1 200 OK");
+    espClient.println("Content-Type: text/html");
+	espClient.println(""); //  do not forget ths one
+	espClient.println(MqttMes);
 
 	//espServer.send(200, "application/json", "{\"IP\":\"" + MqttMes + "\"}");
 	 // Read the first line of the request
@@ -393,8 +393,8 @@ void loop() {
 	 Serial.println(httpMsgPayload);
 	// String request9 = espClient.readStringUntil('\r');
 	 //Serial.println(request9);
-	  char* jsonRx = (char*)httpMsgPayload.c_str();
-	  Serial.print((const char* )jsonRx);
+	 char* jsonRx = (char*)httpMsgPayload.c_str();
+	 Serial.print((const char* )jsonRx);
 	 StaticJsonBuffer<500> jsonRxBufferHttp;
 	 JsonObject& rootRxHttp = jsonRxBufferHttp.parseObject(jsonRx);
 
@@ -420,21 +420,11 @@ void loop() {
 	 appDataRx.ctrlBot2  = rootRxHttp["ctrlBot2"];
 	 appDataRx.ctrlBot3  = rootRxHttp["ctrlBot3"];
 	 appDataRx.ctrlMode  = rootRxHttp["ctrlMode"];
-	 //uint16_t bien = (uint16_t)appDataRx.ctrAppData[0]+((uint16_t)appDataRx.ctrAppData[1]<<8);
-	// Serial.println(appDataRx.time1Bot1On);
-	// Serial.println(appDataRx.time1Bot2On);
-	 //Serial.println(appDataRx.time1Bot3On);
-	 //Serial.println(appDataRx.ctrlBot1);
-	 //Serial.println(appDataRx.ctrlBot2);
-	 //Serial.println( appDataRx.ctrlBot3);
-	  //Serial.println((const char*)appDataRx.ctrAppData);
-	 // Serial.print(appDataRx.ctrAppData);
-	 // Serial.print((const char*)appDataRx.ctrAppData);
-	   //Serial.println(appDataRx.time1Bot1);
-	  for(int i = 0; i <40; i++){
+
+	 for(int i = 0; i <40; i++){
 
 	   Serial.print(appDataRx.ctrAppData[i]);
-	  }
+	 }
 
 
 
