@@ -347,7 +347,7 @@ void loop() {
 		// snprintf (msg, 75, "Bang Nguyen #%ld", value);
 		client.publish("greenturaClient", MqttMes);
 	  }
-  }
+}
 	else{ // http local server open
 		delay(500);
 
@@ -365,10 +365,10 @@ void loop() {
 		delay(10);
 		}
 	}
-	espClient.println("HTTP/1.1 200 OK");
-    espClient.println("Content-Type: text/html");
-	espClient.println(""); //  do not forget ths one
-	espClient.println(MqttMes);
+	 /*espClient.println("HTTP/1.1 200 OK");
+	 espClient.println("Content-Type: text/html");
+	 espClient.println(""); //  do not forget ths one
+	 espClient.println(MqttMes);*/
 
 	//espServer.send(200, "application/json", "{\"IP\":\"" + MqttMes + "\"}");
 	 // Read the first line of the request
@@ -434,7 +434,7 @@ void loop() {
 //String request = espClient.readString();
 //espClient.
     //Serial.println(request);
-	server.handleClient();
+	//server.handleClient();
 
 
 }
