@@ -77,7 +77,7 @@
             android:inputType="number"
             android:id="@+id/time1On_h"
 
-            android:layout_alignBottom="@+id/time1On_m"
+            android:layout_alignBottom="@+id/timer1"
             android:layout_toRightOf="@+id/timer1"
             android:layout_toEndOf="@+id/timer1" />
             />
@@ -87,9 +87,9 @@
             android:layout_height="20dp"
             android:text="h"
             android:id="@+id/textView2"
-            android:layout_alignBottom="@+id/time1On_h"
-            android:layout_toEndOf="@+id/time1On_h"
-            android:layout_toRightOf="@+id/time1On_h" />
+            android:layout_alignBottom="@+id/timer1"
+            android:layout_toRightOf="@+id/time1On_h"
+            android:layout_toEndOf="@+id/time1On_h" />
         <EditText
             android:layout_width="30dp"
             android:layout_height="40dp"
@@ -99,9 +99,10 @@
             android:ems="10"
             android:lines="1"
             android:id="@+id/time1On_m"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView2"
             android:layout_toEndOf="@+id/textView2"
-            android:layout_alignParentTop="true" />
+            android:layout_alignBottom="@+id/timer1" />
 
         <CheckBox
             android:layout_width="50dp"
@@ -120,21 +121,22 @@
             android:layout_height="40dp"
             android:inputType="number"
             android:id="@+id/time1Off_h"
-            android:layout_marginLeft="33dp"
-            android:layout_marginStart="33dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/time1On_m"
-            android:layout_toEndOf="@+id/time1On_m" />
+            android:layout_toEndOf="@+id/time1On_m"
+            android:layout_alignBottom="@+id/timer1" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="h"
             android:id="@+id/textView10"
-            android:layout_alignBaseline="@+id/textView2"
-            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignTop="@+id/textView2"
             android:layout_toRightOf="@+id/time1Off_h"
-            android:layout_toEndOf="@+id/time1Off_h" />
+            android:layout_toEndOf="@+id/time1Off_h"
+            android:layout_alignBottom="@+id/timer1" />
 
         <EditText
             android:layout_width="30dp"
@@ -143,7 +145,8 @@
             android:id="@+id/time1Off_m"
             android:layout_alignTop="@+id/time1Off_h"
             android:layout_toRightOf="@+id/textView10"
-            android:layout_toEndOf="@+id/textView10" />
+            android:layout_toEndOf="@+id/textView10"
+            android:layout_alignBottom="@+id/timer1" />
 
     </RelativeLayout> <!-- timer1 -->
 
@@ -188,16 +191,16 @@
             android:numeric="integer"
             android:layout_alignTop="@+id/time2On_m"
             android:layout_toRightOf="@+id/timer2"
-            android:layout_toEndOf="@+id/timer2" />
+            android:layout_toEndOf="@+id/timer2"
+            android:layout_alignBottom="@+id/timer2" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="h"
 
             android:id="@+id/textView11"
-            android:layout_alignBaseline="@+id/textView12"
-            android:layout_alignBottom="@+id/textView12"
+            android:layout_alignBottom="@+id/timer2"
             android:layout_toRightOf="@+id/time2On_h"
             android:layout_toEndOf="@+id/time2On_h" />
         <EditText
@@ -209,7 +212,8 @@
             android:id="@+id/time2On_m"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView11"
-            android:layout_toEndOf="@+id/textView11" />
+            android:layout_toEndOf="@+id/textView11"
+            android:layout_alignBottom="@+id/timer2" />
 
         <EditText
             android:layout_width="30dp"
@@ -220,14 +224,15 @@
             android:layout_toRightOf="@+id/time2On_m"
             android:layout_toEndOf="@+id/time2On_m"
             android:layout_marginLeft="33dp"
-            android:layout_marginStart="33dp" />
+            android:layout_marginStart="33dp"
+            android:layout_alignBottom="@+id/timer2" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="h"
             android:id="@+id/textView12"
-            android:layout_alignBottom="@+id/checkBoxTime2"
+            android:layout_alignBottom="@+id/timer2"
             android:layout_toRightOf="@+id/time2Off_h"
             android:layout_toEndOf="@+id/time2Off_h" />
 
@@ -238,7 +243,8 @@
             android:id="@+id/time2Off_m"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/textView12"
-            android:layout_toEndOf="@+id/textView12" />
+            android:layout_toEndOf="@+id/textView12"
+            android:layout_alignBottom="@+id/timer2" />
 
         <CheckBox
             android:layout_width="50dp"
@@ -246,7 +252,7 @@
             android:text="ok"
             android:id="@+id/checkBoxTime2"
             android:layout_alignBaseline="@+id/time2Off_m"
-            android:layout_alignBottom="@+id/time2Off_m"
+            android:layout_alignBottom="@+id/timer2"
             android:layout_alignParentRight="true"
 
             android:checked="false" />
@@ -293,15 +299,16 @@
             android:numeric="integer"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/timer3"
-            android:layout_toEndOf="@+id/timer3" />  <!--  timer3_h -->
+            android:layout_toEndOf="@+id/timer3"
+            android:layout_alignBottom="@+id/timer3" />  <!--  timer3_h -->
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="h"
 
             android:id="@+id/textView13"
-            android:layout_alignBottom="@+id/checkBoxTime3"
+            android:layout_alignBottom="@+id/timer3"
             android:layout_toRightOf="@+id/time3On_h"
             android:layout_toEndOf="@+id/time3On_h" />
         <EditText
@@ -317,7 +324,8 @@
             android:id="@+id/time3On_m"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView13"
-            android:layout_toEndOf="@+id/textView13" />
+            android:layout_toEndOf="@+id/textView13"
+            android:layout_alignBottom="@+id/timer3" />
         <CheckBox
             android:layout_width="50dp"
             android:layout_height="wrap_content"
@@ -327,7 +335,8 @@
             android:checked="false"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/timer3" />
 
         <EditText
             android:layout_width="30dp"
@@ -338,14 +347,15 @@
             android:layout_marginStart="33dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/time3On_m"
-            android:layout_toEndOf="@+id/time3On_m" />
+            android:layout_toEndOf="@+id/time3On_m"
+            android:layout_alignBottom="@+id/timer3" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="h"
             android:id="@+id/textView14"
-            android:layout_alignBottom="@+id/checkBoxTime3"
+            android:layout_alignBottom="@+id/timer3"
             android:layout_toRightOf="@+id/time3Off_h"
             android:layout_toEndOf="@+id/time3Off_h" />
 
@@ -354,7 +364,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/time3Off_m"
             android:inputType="number"
-            android:layout_alignBottom="@+id/time3Off_h"
+            android:layout_alignBottom="@+id/timer3"
             android:layout_toRightOf="@+id/textView14"
             android:layout_toEndOf="@+id/textView14" /><!--Timer3_m -->
     </RelativeLayout> <!--  timer3 -->
@@ -413,7 +423,7 @@
         android:textColorLink="@color/colorPrimaryDark"
         android:checked="false"
         android:layout_below="@+id/ctrlBot1"
-        android:layout_toLeftOf="@+id/textView15"
+        android:layout_toLeftOf="@+id/bot1Stt"
         android:layout_alignLeft="@+id/ctrlBot1"
         android:layout_alignStart="@+id/ctrlBot1" />
 
@@ -427,8 +437,8 @@
         android:layout_below="@+id/ctrlBot2"
         android:layout_alignLeft="@+id/ctrlBot2"
         android:layout_alignStart="@+id/ctrlBot2"
-        android:layout_toStartOf="@+id/textView16"
-        android:layout_toLeftOf="@+id/textView16" />
+        android:layout_toStartOf="@+id/bot2Stt"
+        android:layout_toLeftOf="@+id/bot2Stt" />
 
 
 
@@ -525,30 +535,33 @@
         android:layout_height="wrap_content"
         android:text="Status"
         android:textSize="18dp"
-        android:id="@+id/textView15"
+        android:id="@+id/bot1Stt"
         android:layout_alignBottom="@+id/ctrlBot1"
         android:layout_toRightOf="@+id/ctrlBot1"
-        android:layout_toEndOf="@+id/ctrlBot1" />
+        android:layout_toEndOf="@+id/ctrlBot1"
+        android:layout_below="@+id/switch_manual_control" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:text="Status"
-        android:id="@+id/textView16"
+        android:id="@+id/bot2Stt"
         android:layout_above="@+id/ctrlBot3"
         android:layout_toRightOf="@+id/ctrlBot2"
-        android:layout_toEndOf="@+id/ctrlBot2" />
+        android:layout_toEndOf="@+id/ctrlBot2"
+        android:layout_alignTop="@+id/ctrlBot2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:text="Status"
-        android:id="@+id/textView17"
+        android:id="@+id/bot3Stt"
         android:layout_alignBottom="@+id/ctrlBot3"
         android:layout_toRightOf="@+id/ctrlBot3"
-        android:layout_toEndOf="@+id/ctrlBot3" />
+        android:layout_toEndOf="@+id/ctrlBot3"
+        android:layout_below="@+id/ctrlBot2" />
 
 </RelativeLayout>
 </ScrollView>

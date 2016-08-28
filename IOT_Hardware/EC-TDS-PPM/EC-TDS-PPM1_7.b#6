@@ -3417,12 +3417,12 @@ design rules under a new name.</description>
 <contactref element="R37" pad="2"/>
 <contactref element="R39" pad="3"/>
 <contactref element="IC3" pad="2"/>
-<wire x1="83.185" y1="38.012" x2="83.312" y2="35.56" width="0.254" layer="1"/>
-<wire x1="83.312" y1="35.56" x2="81.788" y2="34.036" width="0.254" layer="1"/>
+<wire x1="83.185" y1="38.012" x2="83.185" y2="35.433" width="0.254" layer="1"/>
+<wire x1="83.185" y1="35.433" x2="81.788" y2="34.036" width="0.254" layer="1"/>
 <wire x1="85.217" y1="35.433" x2="83.566" y2="37.084" width="0.254" layer="16"/>
-<wire x1="83.566" y1="37.084" x2="83.566" y2="37.973" width="0.254" layer="16"/>
-<via x="83.566" y="37.973" extent="1-16" drill="0.6096"/>
-<wire x1="83.566" y1="37.973" x2="83.185" y2="38.012" width="0.254" layer="1"/>
+<wire x1="83.566" y1="37.084" x2="83.185" y2="37.973" width="0.254" layer="16"/>
+<via x="83.185" y="37.973" extent="1-16" drill="0.6096"/>
+<wire x1="83.185" y1="37.973" x2="83.185" y2="38.012" width="0.254" layer="1"/>
 <wire x1="85.217" y1="35.433" x2="92.583" y2="35.433" width="0.254" layer="16"/>
 <wire x1="92.583" y1="35.433" x2="92.837" y2="35.179" width="0.254" layer="16"/>
 </signal>

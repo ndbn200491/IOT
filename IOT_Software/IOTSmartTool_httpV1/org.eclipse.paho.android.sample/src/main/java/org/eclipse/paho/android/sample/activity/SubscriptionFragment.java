@@ -49,24 +49,25 @@ public class SubscriptionFragment extends Fragment {
     int temp_qos_value = 0;
     ListView subscriptionListView;
     Thread subThread ;
-    String humi ;
-    String temp;
-    String ph;
+    float humi ;
+    float temp;
+    float ph;
+    float ec;
+    float ppm;
     String cmd;
     String httpContent;
     int i = 100000;
+    static int bot1Stt, bot2Stt, bot3Stt;
     String SetServerString = "";
     //String httpPath = "http://khoapham.vn/KhoaPhamTraining/laptrinhios/jSON/demo3.json";
     String httpPath = "http://192.168.4.1";
     String httpMsg;
     // MessageListItemAdapter messageListAdapter;
     ArrayList<Subscription> subscriptions;
+    //ArrayList<UnSubs>
     ArrayList<ReceivedMessage> messages;
     SubscriptionListItemAdapter adapter;
-
     Connection connection;
-
-
     public SubscriptionFragment() {
         // Required empty public constructor
     }
@@ -81,15 +82,12 @@ public class SubscriptionFragment extends Fragment {
                 .getConnections();
         connection = connections.get(connectionHandle);
         subscriptions = connection.getSubscriptions();
+
         messages = connection.getMessages();
+
         //this.runOnUiThread(Runnable action){
-
-
         //}
-
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,73 +100,53 @@ public class SubscriptionFragment extends Fragment {
                 showInputDialog();
             }
         });
-
         final TextView humiData = (TextView) rootView.findViewById(R.id.humiData);
         final TextView tempData = (TextView) rootView.findViewById(R.id.tempData);
         final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
+        final TextView ecVal    = (TextView) rootView.findViewById(R.id.ecVal);
+        final TextView ppmVal   = (TextView) rootView.findViewById(R.id.ppmVal);
         connection.addReceivedMessageListner(new IReceivedMessageListener() {
             @Override
             public void onMessageReceived(ReceivedMessage message) {
                 String jsonMes = new String(message.getMessage().getPayload());
                 //messageListAdapter.notifyDataSetChanged();
-
                 //  Log.d("The Json mesage ........................................................", jsonMes);
                 if(jsonMes.contains("}")&&jsonMes.contains("{")){
                     try {
                         JSONObject sensorDataJson = new JSONObject(jsonMes);
-                        humi = sensorDataJson.getString("humi") + i++;
-                        temp = sensorDataJson.getString("temp");
-                        ph  = sensorDataJson.getString("PH+-");
-
-                        final TextView humiData = (TextView) rootView.findViewById(R.id.humiData);
-                        final TextView tempData = (TextView) rootView.findViewById(R.id.tempData);
-                        final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
+                        humi = (float)sensorDataJson.getDouble("humi") + i++;
+                        temp = (float)sensorDataJson.getDouble("temp");
+                        ph  = (float)sensorDataJson.getDouble("PH+-");
+                        ec = (float)sensorDataJson.getDouble("ec");
+                        ppm = (float)sensorDataJson.getDouble("ppm");
                         humiData.setText(humi+"(%)");
                         tempData.setText(temp+"(C Degree)");
                         PHData.setText(ph+"(+/-)");
-
-
+                        ecVal.setText(ec + "(uS)");
+                        ppmVal.setText(ppm + "");
+                        bot1Stt = sensorDataJson.getInt("rel1");
+                        bot2Stt = sensorDataJson.getInt("rel2");
+                        bot3Stt = sensorDataJson.getInt("rel3");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
-
-
             }
         });
-
         // String strHumiData = getArguments().getString("humiData");
-        humiData.setText(humi);
-        tempData.setText(temp);
-        PHData.setText(ph);
+        //humiData.setText(humi);
+       // tempData.setText(temp);
+        //PHData.setText(ph);
         Log.d(" run lai tu dau #########################################", ""+i);
 
-        new CountDownTimer(100000, 100) {
-            @Override
-            public void onTick(long l) {
-
-
-            }
-
-            @Override
-            public void onFinish() {
-
-                // i = 100000;
-                // Toast.makeText(getActivity(), "timeout");
-                Log.d("timout ", " het thoi gian roi");
-
-
-            }
-        };
 
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final TextView humiData = (TextView) rootView.findViewById(R.id.humiData);
-                final TextView tempData = (TextView) rootView.findViewById(R.id.tempData);
-                final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
+                //final TextView humiData = (TextView) rootView.findViewById(R.id.humiData);
+                //final TextView tempData = (TextView) rootView.findViewById(R.id.tempData);
+                //final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -177,10 +155,19 @@ public class SubscriptionFragment extends Fragment {
                         if(httpMsg != null) {
                             try {
                                 sensorDataJson = new JSONObject(httpMsg);
-                                humi = sensorDataJson.getString("humi") + i++;
-                                temp = sensorDataJson.getString("temp");
-                                ph = sensorDataJson.getString("PH+-");
-
+                                humi = (float)sensorDataJson.getDouble("humi") + i++;
+                                temp = (float)sensorDataJson.getDouble("temp");
+                                ph  = (float)sensorDataJson.getDouble("PH+-");
+                                ec = (float)sensorDataJson.getDouble("ec");
+                                ppm = (float)sensorDataJson.getDouble("ppm");
+                                humiData.setText(humi+"(%)");
+                                tempData.setText(temp+"(C Degree)");
+                                PHData.setText(ph+"(+/-)");
+                                ecVal.setText(ec + "(uS)");
+                                ppmVal.setText(ppm + "");
+                                bot1Stt = sensorDataJson.getInt("rel1");
+                                bot2Stt = sensorDataJson.getInt("rel2");
+                                bot3Stt = sensorDataJson.getInt("rel3");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -191,6 +178,8 @@ public class SubscriptionFragment extends Fragment {
                             humiData.setText(humi+"(%)");
                             tempData.setText(temp+"(C Degree)");
                             PHData.setText(ph+"(+/-)");
+                            ecVal.setText(ec + "(uS)");
+                            ppmVal.setText(ppm +"");
                         }
                         /*JSONObject sensorDataJson = null;
                         try {
@@ -332,9 +321,6 @@ public class SubscriptionFragment extends Fragment {
         });
 
         final Switch notifySwitch = (Switch) promptView.findViewById(R.id.show_notifications_switch);
-
-
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(((AppCompatActivity) getActivity()).getSupportActionBar().getThemedContext());
         alertDialogBuilder.setView(promptView);
         alertDialogBuilder.setCancelable(true).setPositiveButton(R.string.subscribe_ok, new DialogInterface.OnClickListener() {
@@ -362,7 +348,4 @@ public class SubscriptionFragment extends Fragment {
         alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         alert.show();
     }
-
-
-
 }

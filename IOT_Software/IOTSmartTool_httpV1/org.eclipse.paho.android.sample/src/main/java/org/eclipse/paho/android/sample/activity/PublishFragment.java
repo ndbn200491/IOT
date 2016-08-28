@@ -1,9 +1,12 @@
 package org.eclipse.paho.android.sample.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -54,6 +58,9 @@ public class PublishFragment extends Fragment {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         Map<String, Connection> connections = Connections.getInstance(this.getActivity())
                 .getConnections();
@@ -61,6 +68,7 @@ public class PublishFragment extends Fragment {
 
         System.out.println("FRAGMENT CONNECTION: " + this.getArguments().getString(ActivityConstants.CONNECTION_KEY));
         System.out.println("NAME:" + connection.getId());
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,10 +109,38 @@ public class PublishFragment extends Fragment {
         final CheckBox checkBoxSelectBot2 = (CheckBox) rootView.findViewById(R.id.selectBot2);
         final CheckBox checkBoxSelectBot3 = (CheckBox) rootView.findViewById(R.id.selectBot3);
 
+        // bot status
+        final TextView bot1SttView = (TextView) rootView.findViewById(R.id.bot1Stt);
+        final TextView bot2SttView = (TextView) rootView.findViewById(R.id.bot2Stt);
+        final TextView bot3SttView = (TextView) rootView.findViewById(R.id.bot3Stt);
         Button saveBtn = (Button) rootView.findViewById(R.id.publish_button);
+        if(SubscriptionFragment.bot1Stt == 1 ){
+            bot1SttView.setText("On");
+            bot1SttView.setTextColor(Color.parseColor("#006633"));
+            //bot1SttView.setBackgroundColor();
+        }else{
+            bot1SttView.setText("Off");
+            bot1SttView.setTextColor(Color.parseColor("#cc0000"));
+        }
+
+        if(SubscriptionFragment.bot1Stt == 1 ){
+            bot2SttView.setText("On");
+            bot1SttView.setTextColor(Color.parseColor("#006633"));
+        }else{
+            bot2SttView.setText("Off");
+            bot2SttView.setTextColor(Color.parseColor("#cc0000"));
+        }
+
+        if(SubscriptionFragment.bot1Stt == 1 ){
+            bot3SttView.setText("On");
+            bot3SttView.setTextColor(Color.parseColor("#006633"));
+        }else{
+            bot3SttView.setText("Off");
+            bot3SttView.setTextColor(Color.parseColor("#cc0000"));
+        }
+
+
         jsonObject = new JSONObject();
-
-
         time1On_h.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -230,9 +266,6 @@ public class PublishFragment extends Fragment {
                 }else{
                     time2Onm =0;
                 }
-
-
-
             }
         });
         time3On_h.addTextChangedListener(new TextWatcher() {
@@ -252,8 +285,6 @@ public class PublishFragment extends Fragment {
 
                 String strEdit =editable.toString();
                 int dbl ;
-
-
                 if(strEdit != null && !strEdit.equals("")) {
                     dbl = Integer.parseInt(strEdit);
                     if(dbl<=23 && dbl >=0) {
@@ -875,6 +906,49 @@ public class PublishFragment extends Fragment {
                         new sendData().execute(espServer,jsonObject.toString());
                     }
                 });
+                // update the bot status
+                FragmentManager  fm = getFragmentManager();
+                //SubscriptionFragment SubFmBot1Stt = (SubscriptionFragment) fm.findFragmentById(R.id.bot1Stt);
+                //SubscriptionFragment SubFmBot2Stt = (SubscriptionFragment) fm.findFragmentById(R.id.bot2Stt);
+                //SubscriptionFragment SubFmBot3Stt = (SubscriptionFragment) fm.findFragmentById(R.id.bot3Stt);
+                new CountDownTimer(5000, 500) {
+                    @Override
+                    public void onTick(long l) {
+                        if(SubscriptionFragment.bot1Stt == 1 ){
+                            bot1SttView.setText("On");
+                            bot1SttView.setTextColor(Color.parseColor("#006633"));
+                            //bot1SttView.setBackgroundColor();
+                        }else{
+                            bot1SttView.setText("Off");
+                            bot1SttView.setTextColor(Color.parseColor("#cc0000"));
+                        }
+
+                        if(SubscriptionFragment.bot1Stt == 1 ){
+                            bot2SttView.setText("On");
+                            bot1SttView.setTextColor(Color.parseColor("#006633"));
+                        }else{
+                            bot2SttView.setText("Off");
+                            bot2SttView.setTextColor(Color.parseColor("#cc0000"));
+                        }
+
+                        if(SubscriptionFragment.bot1Stt == 1 ){
+                            bot3SttView.setText("On");
+                            bot3SttView.setTextColor(Color.parseColor("#006633"));
+                        }else{
+                            bot3SttView.setText("Off");
+                            bot3SttView.setTextColor(Color.parseColor("#cc0000"));
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                }.start();
+
+
+
+
             }
         });
 
@@ -963,5 +1037,7 @@ public class PublishFragment extends Fragment {
         return result;
 
     }
+
+
 
 }
