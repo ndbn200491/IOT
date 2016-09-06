@@ -30,7 +30,7 @@ public class HistoryFragment extends Fragment {
     public  String PHData;
     public String jsonDecode ;
 
-int i ;
+    int i ;
     public ArrayList<ReceivedMessage> messages;
     public HistoryFragment() {
 
@@ -55,6 +55,7 @@ int i ;
                 System.out.println("GOT A MESSAGE in history " + new String(message.getMessage().getPayload()));
                 System.out.println("M: " + messages.size());
                 messageListAdapter.notifyDataSetChanged();
+
                // jsonDecode = new String( message.getMessage().getPayload());
                // i +=1;
                 //Log.d("The Json mesage ........................................................", jsonDecode);

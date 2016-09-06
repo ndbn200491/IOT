@@ -563,6 +563,15 @@
         android:layout_toEndOf="@+id/ctrlBot3"
         android:layout_below="@+id/ctrlBot2" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Final Setup"
+        android:id="@+id/logCtrlViewBtn"
+        android:layout_alignTop="@+id/textView9"
+        android:layout_toEndOf="@+id/retain_switch"
+        android:layout_toRightOf="@+id/retain_switch" />
+
 </RelativeLayout>
 </ScrollView>
 

@@ -28,7 +28,7 @@ public class ConnectionModel {
 
     private String clientHandle = new String();
     private String clientId = "Enter ClientID";
-    private String serverHostName = "broker.mqtt-dashboard.com";
+    private String serverHostName = "iot.eclipse.org";
     private int serverPort = 1883;
     private boolean cleanSession = true;
     private String username = new String();

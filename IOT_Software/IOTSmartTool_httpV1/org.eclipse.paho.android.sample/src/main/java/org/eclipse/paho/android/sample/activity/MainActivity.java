@@ -1,20 +1,19 @@
 package org.eclipse.paho.android.sample.activity;
 
 
-
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
+
 import org.eclipse.paho.android.sample.R;
 import org.eclipse.paho.android.sample.internal.Connections;
 import org.eclipse.paho.android.sample.model.ConnectionModel;
@@ -100,7 +99,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_main);
+    }
 
 
     @Override

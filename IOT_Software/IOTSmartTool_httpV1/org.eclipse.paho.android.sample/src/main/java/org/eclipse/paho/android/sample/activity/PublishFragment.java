@@ -1,22 +1,27 @@
 package org.eclipse.paho.android.sample.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +32,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.paho.android.sample.R;
+import org.eclipse.paho.android.sample.components.LogCtrlMessageAdapter;
 import org.eclipse.paho.android.sample.internal.Connections;
+import org.eclipse.paho.android.sample.model.LogCtrlMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +42,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 
 
@@ -46,13 +56,24 @@ public class PublishFragment extends Fragment {
     boolean retainValue = false;
     String topic = "d1";
     String message = "Hello world";
-    public int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
-    public int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;
+    public static int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
+    public static int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;
     public int ctrlBot1, ctrlBot2, ctrlBot3, manualCtrlEn;
     public int autoCtrlSw, manCtrlSw, ctrlMode;
     public int checkTime1 = 0, checkTime2 = 0, checkTim3 = 0;
-    public int selectBot1=0, selectBot2=0, selectBot3=0;
+    public static int selectBot1, selectBot2, selectBot3;
     public String espServer = "http://192.168.4.1";
+    public int time1On, time2On,time3On, time1Off, time2Off, time3Off;
+    // public ArrayList<LogCtrlMessageAdapter> msgSend ;
+     public LogCtrlMessageAdapter logCtrlMessageAdapter;
+    public static ArrayList<LogCtrlMessage>logMsg = new ArrayList<LogCtrlMessage>();
+    //public ArrayList<LogCtrlMessage>logMsg = new ArrayList<LogCtrlMessage>();
+
+
+
+
+
+
     public PublishFragment() {
         // Required empty public constructor
     }
@@ -69,7 +90,10 @@ public class PublishFragment extends Fragment {
         System.out.println("FRAGMENT CONNECTION: " + this.getArguments().getString(ActivityConstants.CONNECTION_KEY));
         System.out.println("NAME:" + connection.getId());
 
+
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,12 +116,6 @@ public class PublishFragment extends Fragment {
         Switch CtrlBot2 = (Switch) rootView.findViewById(R.id.ctrlBot2);
         Switch CtrlBot3 = (Switch) rootView.findViewById(R.id.ctrlBot3);
        // Switch ManualCtrlEn = (Switch) rootView.findViewById(R.id.switch_manual_control);
-
-
-
-
-
-
         Switch autoCtrl = (Switch) rootView.findViewById(R.id.switch_auto_control);
         Switch manCtrl  = (Switch) rootView.findViewById(R.id.switch_manual_control);
         final CheckBox checkBoxTime1 = (CheckBox) rootView.findViewById(R.id.checkBoxTime1);
@@ -114,6 +132,7 @@ public class PublishFragment extends Fragment {
         final TextView bot2SttView = (TextView) rootView.findViewById(R.id.bot2Stt);
         final TextView bot3SttView = (TextView) rootView.findViewById(R.id.bot3Stt);
         Button saveBtn = (Button) rootView.findViewById(R.id.publish_button);
+        Button logViewBtn = (Button) rootView.findViewById(R.id.logCtrlViewBtn);
         if(SubscriptionFragment.bot1Stt == 1 ){
             bot1SttView.setText("On");
             bot1SttView.setTextColor(Color.parseColor("#006633"));
@@ -123,15 +142,15 @@ public class PublishFragment extends Fragment {
             bot1SttView.setTextColor(Color.parseColor("#cc0000"));
         }
 
-        if(SubscriptionFragment.bot1Stt == 1 ){
+        if(SubscriptionFragment.bot2Stt == 1 ){
             bot2SttView.setText("On");
-            bot1SttView.setTextColor(Color.parseColor("#006633"));
+            bot2SttView.setTextColor(Color.parseColor("#006633"));
         }else{
             bot2SttView.setText("Off");
             bot2SttView.setTextColor(Color.parseColor("#cc0000"));
         }
 
-        if(SubscriptionFragment.bot1Stt == 1 ){
+        if(SubscriptionFragment.bot3Stt == 1 ){
             bot3SttView.setText("On");
             bot3SttView.setTextColor(Color.parseColor("#006633"));
         }else{
@@ -231,8 +250,6 @@ public class PublishFragment extends Fragment {
                 }else{
                     time2Onh = 0;
                 }
-
-
             }
         });
         time2On_m.addTextChangedListener(new TextWatcher() {
@@ -750,13 +767,13 @@ public class PublishFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time1On = time1Onh +time1Onm ;
-                int time2On = time2Onh +time2Onm;
-                int time3On = time3Onh +time3Onm;
+                 time1On = time1Onh +time1Onm ;
+                 time2On = time2Onh +time2Onm;
+                 time3On = time3Onh +time3Onm;
 
-                int time1Off = time1Offh + time1Offm;
-                int time2Off = time2Offh + time2Offm;
-                int time3Off = time3Offh + time3Offm;
+                 time1Off = time1Offh + time1Offm;
+                 time2Off = time2Offh + time2Offm;
+                 time3Off = time3Offh + time3Offm;
                 if(autoCtrlSw == 1) {
                     if (checkBoxSelectBot1.isChecked()) {
                         if (checkBoxTime1.isChecked()) {
@@ -787,7 +804,7 @@ public class PublishFragment extends Fragment {
 
                             try {
 
-                                jsonObject.put("time3Bot1", time3On);
+                                jsonObject.put("time3Bot1On", time3On);
                                 jsonObject.put("time3Bot1Off", time3Off);
 
                             } catch (JSONException e) {
@@ -801,8 +818,6 @@ public class PublishFragment extends Fragment {
                             try {
                                 jsonObject.put("time1Bot2On", time1On);
                                 jsonObject.put("time1Bot2Off", time1Off);
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -819,7 +834,7 @@ public class PublishFragment extends Fragment {
                         if (checkBoxTime3.isChecked()) {
                             try {
 
-                                jsonObject.put("time3Bot2", time3On);
+                                jsonObject.put("time3Bot2On", time3On);
                                 jsonObject.put("time3Bot2Off", time3Off);
 
                             } catch (JSONException e) {
@@ -878,7 +893,7 @@ public class PublishFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }*/
-                if(manualCtrlEn ==1){
+                if(manCtrlSw ==1){
                     try {
                         jsonObject.put("ctrlBot1", ctrlBot1);
                         jsonObject.put("ctrlBot2", ctrlBot2);
@@ -911,7 +926,7 @@ public class PublishFragment extends Fragment {
                 //SubscriptionFragment SubFmBot1Stt = (SubscriptionFragment) fm.findFragmentById(R.id.bot1Stt);
                 //SubscriptionFragment SubFmBot2Stt = (SubscriptionFragment) fm.findFragmentById(R.id.bot2Stt);
                 //SubscriptionFragment SubFmBot3Stt = (SubscriptionFragment) fm.findFragmentById(R.id.bot3Stt);
-                new CountDownTimer(5000, 500) {
+                new CountDownTimer(10000, 500) {
                     @Override
                     public void onTick(long l) {
                         if(SubscriptionFragment.bot1Stt == 1 ){
@@ -923,15 +938,15 @@ public class PublishFragment extends Fragment {
                             bot1SttView.setTextColor(Color.parseColor("#cc0000"));
                         }
 
-                        if(SubscriptionFragment.bot1Stt == 1 ){
+                        if(SubscriptionFragment.bot2Stt == 1 ){
                             bot2SttView.setText("On");
-                            bot1SttView.setTextColor(Color.parseColor("#006633"));
+                            bot2SttView.setTextColor(Color.parseColor("#006633"));
                         }else{
                             bot2SttView.setText("Off");
                             bot2SttView.setTextColor(Color.parseColor("#cc0000"));
                         }
 
-                        if(SubscriptionFragment.bot1Stt == 1 ){
+                        if(SubscriptionFragment.bot3Stt == 1 ){
                             bot3SttView.setText("On");
                             bot3SttView.setTextColor(Color.parseColor("#006633"));
                         }else{
@@ -945,13 +960,63 @@ public class PublishFragment extends Fragment {
 
                     }
                 }.start();
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy  hh:mm:ss  z");
+                String formatTime = sdf.format(c.getTime());
+                if(selectBot1 == 1){
+                    logMsg.add(new LogCtrlMessage(jsonObject.toString(),
+                            formatTime,
+                            "1",
+                            time1Onh/60 +"h"+time1Onm,
+                            time1Offh/60 + "h" + time1Offm,
+                            time2Onh/60 + "h" + time2Onm,
+                            time2Offh/60 + "h" + time2Offm,
+                            time3Onh/60 +"h" + time3Onm,
+                            time3Offh/60 + "h" + time3Offm,
+                            "Ok"));
 
+                }
+                if(selectBot2 == 1){
+                    logMsg.add(new LogCtrlMessage(jsonObject.toString(),
+                            formatTime,
+                            "2",
+                            time1Onh/60 +  "h"+time1Onm,
+                            time1Offh/60 + "h" + time1Offm,
+                            time2Onh/60 +  "h" + time2Onm,
+                            time2Offh/60 + "h" + time2Offm,
+                            time3Onh/60 +  "h" + time3Onm,
+                            time3Offh/60 + "h" + time3Offm,
+                            "Ok"));
+
+                }
+                if(selectBot3 == 1){
+                    logMsg.add(new LogCtrlMessage(jsonObject.toString(),
+                            formatTime,
+                            "3",
+                            time1Onh/60 +  "h" +time1Onm,
+                            time1Offh/60 + "h" + time1Offm,
+                            time2Onh/60 +  "h" + time2Onm,
+                            time2Offh/60 + "h" + time2Offm,
+                            time3Onh/60 +  "h" + time3Onm,
+                            time3Offh/60 + "h" + time3Offm,
+                            "Ok"));
+                }
 
 
 
             }
-        });
 
+
+
+        });
+        logViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ctrlListAdapter.notifyDataSetChanged();
+               showLogCtrl();
+
+            }
+        });
 
         // Inflate the layout for this fragment
         return rootView;
@@ -1032,12 +1097,192 @@ public class PublishFragment extends Fragment {
         String result = "";
         while((line = bufferedReader.readLine()) != null)
             result += line;
-
         inputStream.close();
         return result;
+    }
+
+
+    protected void showLogCtrl(){
+        // ArrayList<LogCtrlMessage> logCtrlViewMsg = null ;
+      //  final ArrayList<LogCtrlMessage> logCtrlViewBot2 = null;
+       // final ArrayList<LogCtrlMessage> logCtrlViewBot3 = null;
+       // final Button
+       // public ArrayList<LogCtrlMessage> logCtrl ;
+         LayoutInflater layoutInflater =  (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+         View ctrlLogView = layoutInflater.inflate(R.layout.log_ctrl_hist, null);
+         final LogCtrlMessageAdapter logCtrlMessageAdapter;
+
+
+
+
+
+
+        //SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy  hh:mm:ss  z");
+        //String formatTime = s.format(new Date());
+         //final ArrayList<LogCtrlMessage>logMsg = new ArrayList<LogCtrlMessage>();
+        //ArrayList<LogCtrlMessageAdapter> lstView = new ArrayList<LogCtrlMessageAdapter>();
+
+        //ArrayList<LogCtrlMessage>logMsgChan2 = new ArrayList<LogCtrlMessage>();
+        //ArrayList<LogCtrlMessage>logMsgChan3 = new ArrayList<LogCtrlMessage>();
+
+        //final ArrayList<LogCtrlMessage>logMsg = new ArrayList<LogCtrlMessage>();
+         final Button clearBtnLog;
+         ListView ctrlLogListView;
+       //  TextView showxem = (TextView)ctrlLogView.findViewById(R.id.textView18);
+        ctrlLogListView = (ListView) ctrlLogView.findViewById(R.id.ctrl_list);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(((AppCompatActivity) getActivity()).getSupportActionBar().getThemedContext());
+        alertDialogBuilder.setView(ctrlLogView);
+        //logArrAdd();
+        //logMsg.add(new LogCtrlMessage(jsonObject.toString(), "00:00:00","Channel 1", time1On, time1Off, "Ok"));
+       // showxem.setText("Bang Nguyen");
+        // LogCtrlMessageAdapter ctrlListAdapter = null;
+       // final LogCtrlMessageAdapter ctrlListAdapter ;
+
+
+       /* if(selectBot1 == 1){
+            logMsg.add(new LogCtrlMessage(jsonObject.toString(),
+                                        formatTime,
+                                        "1",
+                                        time1Onh/60 +"h"+time1Onm,
+                                        time1Offh/60 + "h" + time1Offm,
+                                        time2Onh/60 + "h" + time2Offm,
+                                        time2Offh/60 + "h" + time2Offm,
+                                        time3Onh/60 +"h" + time3Onm,
+                                        time3Offh/60 + "h" + time3Offm,
+                                        "Ok"));
+
+        }
+        if(selectBot2 == 1){
+            logMsg.add(new LogCtrlMessage(jsonObject.toString(),
+                                        formatTime,
+                                        "2",
+                                        time1Onh/60 +  "h"+time1Onm,
+                                        time1Offh/60 + "h" + time1Offm,
+                                        time2Onh/60 +  "h" + time2Offm,
+                                        time2Offh/60 + "h" + time2Offm,
+                                        time3Onh/60 +  "h" + time3Onm,
+                                        time3Offh/60 + "h" + time3Offm,
+                                        "Ok"));
+
+        }
+        if(selectBot3 == 1){
+            logMsg.add(new LogCtrlMessage(jsonObject.toString(),
+                                        formatTime,
+                                        "3",
+                                        time1Onh/60 +  "h" +time1Onm,
+                                        time1Offh/60 + "h" + time1Offm,
+                                        time2Onh/60 +  "h" + time2Offm,
+                                        time2Offh/60 + "h" + time2Offm,
+                                        time3Onh/60 +  "h" + time3Onm,
+                                        time3Offh/60 + "h" + time3Offm,
+                                        "Ok"));
+        }
+        */
+
+
+
+
+        logCtrlMessageAdapter  = new LogCtrlMessageAdapter(((AppCompatActivity) getActivity()).getSupportActionBar().getThemedContext(), logMsg);
+        ctrlLogListView.setAdapter(logCtrlMessageAdapter);
+
+        clearBtnLog = (Button) ctrlLogView.findViewById(R.id.logViewClearBtn);
+        //  final LogCtrlMessageAdapter finalCtrlListAdapter = ctrlListAdapter;
+
+        clearBtnLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // logCtrlViewMsg.clear();
+                logCtrlMessageAdapter.clear();
+            }
+        });
+
+
+
+        AlertDialog alert =  alertDialogBuilder.create();
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        alert.show();
+
 
     }
 
 
+
+/*public void logArrAdd(){
+    logMsg.add(new LogCtrlMessage(jsonObject.toString(), "00:00:00","Channel 1", time1On, time1Off, "Ok"));
+
+    if(selectBot1 == 1){
+        logMsg.add(new LogCtrlMessage(jsonObject.toString(), "00:00:00","Channel 1", time1On, time1Off, "Ok"));
+
+    }
+    if(selectBot2 == 1){
+        logMsg.add(new LogCtrlMessage(jsonObject.toString(), "00:00:00","Channel 1", time1On, time1Off, "Ok"));
+
+    }
+    if(selectBot2 == 1){
+        logMsg.add(new LogCtrlMessage(jsonObject.toString(), "00:00:00","Channel 1", time1On, time1Off, "Ok"));
+
+    }
+
+
+}*/
+        /*View ctrlLogViewBot1 = layoutInflater.inflate(R.layout.log_ctrl_hist, null);
+
+        ctrlListAdapter = new LogCtrlMessageAdapter(getActivity(), logCtrl);
+        ctrlLogListView = (ListView) ctrlLogView.findViewById(R.id.history_list_view);
+        ctrlLogListView.setAdapter(ctrlListAdapter);
+        //new MessageListItemAdapter(getActivity)
+        */
+
+
+
+
+    //final EditText topicText = (EditText) promptView.findViewById(R.id.subscription_topic_edit_text);
+
+       // final Spinner qos = (Spinner) promptView.findViewById(R.id.subscription_qos_spinner);
+       // final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.qos_options, android.R.layout.simple_spinner_item);
+       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       /* qos.setAdapter(adapter);
+        qos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               // temp_qos_value = Integer.parseInt(getResources().getStringArray(R.array.qos_options)[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        }); */
+
+        //final Switch notifySwitch = (Switch) promptView.findViewById(R.id.show_notifications_switch);
+        /*AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(((AppCompatActivity) getActivity()).getSupportActionBar().getThemedContext());
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder.setCancelable(true).setPositiveButton(R.string.subscribe_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                String topic = topicText.getText().toString();
+
+                Subscription subscription = new Subscription(topic, temp_qos_value, connection.handle(), notifySwitch.isChecked());
+                subscriptions.add(subscription);
+                try {
+                    connection.addNewSubscription(subscription);
+
+                } catch (MqttException ex) {
+                    System.out.println("MqttException whilst subscribing: " + ex.getMessage());
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            ;
+        }).setNegativeButton(R.string.subscribe_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert =  alertDialogBuilder.create();
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        alert.show();
+    }
+*/
 
 }

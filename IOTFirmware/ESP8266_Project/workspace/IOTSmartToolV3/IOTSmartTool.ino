@@ -30,16 +30,29 @@ Bnag Nguyen
 #include <ESP8266WebServer.h>
 #include <EEPROM.h>
 #include <ArduinoJson.h>
+//#define DEBUG_SYSN
+//#define USART_CHECK
 //#define DEBUG
-
+//#define DEBUG_USART
+//#define DEBUG_USART_MQTT_REC
+//#define MQTT_DEBUG_CONNECTION
+//#define DEBUG_MQTT_PRO
+//#define MQTT_RX
+#define SERIAL_RX_BUFEER_SIZE 20
+//#define DEBUG_USART_Tx
 
 // Update these with values suitable for your network.
 
 const char* ssid = "AP_cisco";
 const char* password = "Chantroiviet@2014";
-const char* mqtt_server = "broker.mqtt-dashboard.com";
+
+const char* mqtt_server = "iot.eclipse.org";
+const char* userName = "ndbn200491";
+const char* userPassword = "ndbn1909";
+//const char* mqtt_server = "broker.mqtt-dashboard.com";
 const char* ssid_ap = "greenturaHost";
 const char* pass_ap = "12345678" ;
+const char* pubTopic = "ndbn200491";
 //const char* mqtt_server = "broker.hivemq.com";
 int cntStatus= 0;
 ESP8266WebServer server(80);
@@ -47,7 +60,7 @@ WiFiClient espClient;
 WiFiServer espServer(80);
 PubSubClient client(espClient);
 String content;
-
+int seriCnt = 0 ;
 long lastMsg = 0;
 long lastWiFiConnect ;
 char msg[50];
@@ -82,25 +95,28 @@ StaticJsonBuffer<300> jsonBuffer;
 	    };
 }sensorDataStruct_t;
 */
-typedef union driverDataPackage{
-  char bufferDrvRx[32];
+typedef union {
+  char bufferDrvRx[SERIAL_RX_BUFEER_SIZE];
   struct{
+
+	  uint16_t tempVal;
+	  uint16_t humdVal;
+	  uint16_t ecVal;
+	  uint16_t ppmVal;
+	  uint16_t PHVal;
+	  uint16_t ldrVal;
+	  uint16_t lastUpdateAll;
+	  uint8_t sysn;
 	  uint8_t sst;
-	  float tempVal;
-	  float humdVal;
-	  float ecVal;
-	  float ppmVal;
-	  float PHVal;
-	  float ldrVal;
 	  uint8_t relay1Stt;
 	  uint8_t relay2Stt;
 	  uint8_t relay3Stt;
 	  uint8_t relay4Stt;
-	  uint32_t lastUpdateAll;
+
   };
 }driverDataStruct_t;
 
-typedef union appData{
+typedef union {
 	char ctrAppData[40];
 	 struct
 	    {
@@ -139,39 +155,46 @@ driverDataStruct_t driverDataRx;
 
 void jsonTxMessageUpdate(){
 	String msg;
-	/*root["humi"] = 75.0; //(%)
-	root["temp"] = 30.5; // (C Degree
-	root["PH+-"] =   is;//  (+/-)
+	//root["humi"] = 75.0; //(%)
+	//root["temp"] = 30.5; // (C Degree
+	/*root["PH+-"] =   is;//  (+/-)
 	root["ctrBoardCmd"]= 15;
 	root.printTo(jsonTxMsg, 200);
 	root.end();
 	is++;
 	*/
-
+	root["stt"]  = driverDataRx.sst ;
 	root["humi"] = driverDataRx.humdVal ;
 	root["temp"] = driverDataRx.tempVal;
 	root["ec"]   = driverDataRx.ecVal;
 	root["ppm"]	 = driverDataRx.ppmVal;
 	root["PH+-"] =  driverDataRx.PHVal;
+	root["ldr"]  = driverDataRx.ldrVal;
 	root["rel1"] = driverDataRx.relay1Stt;
 	root["rel2"] = driverDataRx.relay2Stt;
 	root["rel3"] = driverDataRx.relay3Stt;
-	root["ldr"]  = driverDataRx.ldrVal;
+	root["rel4"] = driverDataRx.relay4Stt;
+
 	root.printTo(jsonTxMsg, 200);
 	root.end();	 //root.operator [](MqttMes);
 }
 
 
 void setup() {
-  pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
+  //pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   Serial.begin(115200);
+#ifdef DEBUG_USART
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
+#endif
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
-  client.unsubscribe("greenturaClient");
+  //client.unsubscribe(pubTopic);
+  for(int i = 0; i<19; i++){
+	  driverDataRx.bufferDrvRx[i] = 0;
+  }
   //dataTransfer.ctrData[2] = 5;
   //dataTransfer.ctrData[0] = 4;
   //dataTransfer.ctrData[1] = 3;
@@ -181,6 +204,7 @@ void setup() {
  // data.add(2.302038, 6);   // if not specified, 2 digits are printed
  // root.printTo(Serial);
   jsonBuffer.alloc(300);
+
 }
 
 
@@ -190,13 +214,17 @@ void wifiConnect(void){
 		if(WiFi.status() != WL_CONNECTED){
 			delay(500);
 			cntStatus = 0; //Can not connect to WiFi (Internet)
+		#ifdef DEBUG_USART
 		 Serial.print(".");
+		#endif
 		}else{
 			cntStatus = 1; // Connected to Internet
-			Serial.println("");
+			#ifdef DEBUG_USART
+			  Serial.println("");
 			  Serial.println("WiFi connected");
 			  Serial.println("IP address: ");
 			  Serial.println(WiFi.localIP());
+			#endif
 
 		}
 	}
@@ -238,8 +266,10 @@ void httpReconnect(void){
 }
 
 void mqttReconnect() {
-	Serial.print("Attempting MQTT connection...");
-	//client.setServer(mqtt_server, 1883);
+#ifdef DEBUG_USART_MQTT_REC
+	Serial.println("Attempting MQTT connection...");
+#endif
+	//client.setServer(mqtt_serve                                                                                                                            r, 1883);
 	/*while (!client.connected()) {
 	   // Serial.print("Attempting MQTT connection...");
 	    // Attempt to connect
@@ -277,7 +307,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
    char* jsonRx = (char*)payload;
 
-  StaticJsonBuffer<300> jsonRxBuffer;
+  StaticJsonBuffer<512> jsonRxBuffer;
   JsonObject& rootRx = jsonRxBuffer.parseObject(jsonRx);
 
 
@@ -305,13 +335,33 @@ void callback(char* topic, byte* payload, unsigned int length) {
   appDataRx.ctrlBot2  = rootRx["ctrlBot2"];
   appDataRx.ctrlBot3  = rootRx["ctrlBot3"];
   appDataRx.ctrlMode  = rootRx["ctrlMode"];
+#ifdef DEBUG_USART_Tx
+  Serial.print("time3Bot1On:  ");
+  Serial.println(appDataRx.time3Bot1On);
+  Serial.print("time3Bot2On:  ");
+  Serial.println(appDataRx.time3Bot2On);
+  Serial.print("time3Bot3On:  ");
+  Serial.println(appDataRx.time3Bot3On);
+  Serial.print("time3Bot1Off:  ");
+  Serial.println(appDataRx.time3Bot1Off);
+  Serial.print("time3Bot2Off:  ");
+  Serial.println(appDataRx.time3Bot2Off);
+  Serial.print("time3Bot3Off:  ");
+  Serial.println(appDataRx.time3Bot3Off);
+#endif
 
  uint16_t bien = (uint16_t)appDataRx.ctrAppData[0]+((uint16_t)appDataRx.ctrAppData[1]<<8);
+#ifdef MQTT_RX
+  Serial.print("Control Mode:............");
+  Serial.println(appDataRx.ctrlMode);
+#endif
+
 
  for(int i = 0; i <40; i++){
 
   Serial.print(appDataRx.ctrAppData[i]);
  }
+ Serial.flush();
 }
 
 
@@ -333,15 +383,15 @@ void mqttProcess(void){
 
 	client.loop();
 	long now = millis();
-	if (now - lastMsg > 3000) {
+	if (now - lastMsg > 2000) {
 		lastMsg = now;
 		++value;
-		#ifdef DEBUG
-			Serial.println("Json Message send:...");
+		#ifdef DEBUG_MQTT_PRO
+			Serial.println("Json Message send:.....................................................");
 			Serial.println(jsonTxMsg);
 		#endif
 		// snprintf (msg, 75, "Bang Nguyen #%ld", value);
-		client.publish("greenturaClient", jsonTxMsg);
+		client.publish(pubTopic, jsonTxMsg);
 	}
 }
 void httpLocalProcess(void){
@@ -428,29 +478,79 @@ void httpLocalProcess(void){
 
 //
 void readSerial() // baud = 115200
-{
-	static int i = 0 ;
+{	//int cntt;
+	//seriCnt = 0 ;
 	while(Serial.available()){
-		driverDataRx.bufferDrvRx[i] = Serial.read();
-		i++;
-		if(i >= 32){
-			i = 0 ;
-		#ifdef DEBUG
-			Serial.println("ESP Usart Data Rx Packet:");
-			Serial.println(driverDataRx.tempVal);
-			Serial.println(driverDataRx.humdVal);
-			Serial.println(driverDataRx.PHVal);
-			Serial.println(driverDataRx.ecVal);
-			Serial.println(driverDataRx.ppmVal);
-			Serial.println(driverDataRx.ldrVal);
-			Serial.println(driverDataRx.relay1Stt);
-			Serial.println(driverDataRx.relay2Stt);
-			Serial.println(driverDataRx.relay3Stt);
-			Serial.println(driverDataRx.relay4Stt);
-			Serial.println("ESP Usart Rx completely!");
-		#endif
+		driverDataRx.bufferDrvRx[seriCnt]= Serial.read();
+		 //Serial.readBytes(driverDataRx.bufferDrvRx, 20);
+		/*if(driverDataRx.sysn != 0b10101010){
+			seriCnt = 0;
+			Serial.readBytes()
+		}*/
+
+#ifdef USART_CHECK
+
+		/*Serial.print("sysn:");
+		Serial.println(driverDataRx.sysn);
+		Serial.print("byte[0]:");
+		Serial.println(driverDataRx.bufferDrvRx[0]);
+		Serial.println(".........");
+		Serial.print("Count : ");
+		Serial.println(seriCnt);
+		*/
+		Serial.print(driverDataRx.bufferDrvRx[seriCnt]);
+#endif
+		/*if(driverDataRx.sysn != 0b10101010) {
+			seriCnt =  0;
+		}else{
+			seriCnt++;
+		}*/
+		seriCnt++;
+
+		if(seriCnt >= SERIAL_RX_BUFEER_SIZE){
+
+			seriCnt = 0 ;
+			//Serial.println("...................................");
+			#ifdef DEBUG_USART
+				Serial.println("ESP Usart Data Rx Packet:");
+				Serial.println(driverDataRx.sst);
+				//delay(100);
+				Serial.println(driverDataRx.tempVal);
+				//delay(100);
+				Serial.println(driverDataRx.humdVal);
+				//delay(100);
+				Serial.println(driverDataRx.PHVal);
+				//delay(100);
+				Serial.println(driverDataRx.ecVal);
+				//delay(100);
+				Serial.println(driverDataRx.ppmVal);
+				//delay(100);
+				Serial.println(driverDataRx.ldrVal);
+				//delay(100);
+				Serial.println(driverDataRx.relay1Stt);
+				//delay(100);
+				Serial.println(driverDataRx.relay2Stt);
+				//delay(100);
+				Serial.println(driverDataRx.relay3Stt);
+				//delay(100);
+				Serial.println(driverDataRx.relay4Stt);
+				//delay(100);
+				Serial.println("ESP Usart Rx completely!");
+			#endif
 		}
+#ifdef USART_CHECK
+	Serial.println("Serial Reading.........................");
+#endif
+
 	}
+
+	/*if(driverDataRx.sysn != 0b10101010) {
+						seriCnt =  0;
+			}*/
+
+
+	//Serial.readBytes(driverDataRx.bufferDrvRx, 19);
+
 }
 
 void reInit(void){
@@ -462,11 +562,27 @@ void reInit(void){
 
 void loop() {
 	readSerial();
+
 	jsonTxMessageUpdate();
+
+#ifdef DEBUG_SYSN
+
+	Serial.print("Sysn .............................:");
+	Serial.println(driverDataRx.sysn);
+
+#endif
+	if(driverDataRx.sysn != 0xAA){
+			//Serial.end();
+			//Serial.begin(115200);
+		ESP.reset();
+	}
+
 	static int mqttConnectTime = 0;
 	//update
 	if( cntStatus == 0){
 	  //setup_wifi();
+		seriCnt = 0;  /// reset the
+
 		httpReconnect();
 	#ifdef DEBUG
 		Serial.println("http reconnect...");
@@ -483,19 +599,31 @@ void loop() {
 
 		if(!client.connected()){
 			mqttReconnect();
-			mqttConnectTime++;
-			if(client.connect("ESPClient")){
-				client.subscribe("d1");
-			}else{
 
-				delay(1000);
+			if(client.connect("ESPClient3", userName, userPassword)){
+				client.subscribe("d1");
+				#ifdef MQTT_DEBUG_CONNECTION
+				Serial.println("MQTT subscribe ...");
+				#endif
+				mqttConnectTime = 0;
+			}else{
+				#ifdef MQTT_DEBUG_CONNECTION
+				Serial.println("MQTT Lost Connection and delay ...");
+				#endif
+				delay(100);
+				mqttConnectTime++;
 			}
 			delay(200);
-			if(mqttConnectTime >=10){
+			if(mqttConnectTime >=200){
 				cntStatus = 0; // reconnect
-
+				#ifdef MQTT_DEBUG_CONNECTION
+				Serial.println("MQTT Lost Connection ...");
+				#endif
 			}
 		}else{
+				#ifdef MQTT_DEBUG_CONNECTION
+				//Serial.println("MQTT processing ........");
+				#endif
 		mqttProcess();
 		#ifdef DEBUG
 		//Serial.println("mqtt processing...");
@@ -527,3 +655,7 @@ void loop() {
 }
 
 //https://nodemcu.readthedocs.io/en/dev/en/modules/mqtt/#mqttclientconnect
+
+
+//http://www.ibm.com/developerworks/cloud/library/cl-mqtt-bluemix-iot-node-red-app/
+

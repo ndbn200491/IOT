@@ -113,6 +113,7 @@
     <string name="qos_label">QoS</string>
     <string name="notify_label">Show Notifications</string>
     <string name="subscribe_ok">Ok</string>
+    <string name = "clear_btn" >Clear</string>
     <string name="subscribe_cancel">Cancel</string>
     <string name="qos_text" >QoS: %1$s</string>
     <string name="notify_text">Notifications: %1$s</string>

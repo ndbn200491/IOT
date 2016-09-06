@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +38,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 // http
@@ -52,12 +52,13 @@ public class SubscriptionFragment extends Fragment {
     float humi ;
     float temp;
     float ph;
-    float ec;
-    float ppm;
+    int ec;
+    int ppm;
     String cmd;
     String httpContent;
     int i = 100000;
     static int bot1Stt, bot2Stt, bot3Stt;
+    public static Date timeNow;
     String SetServerString = "";
     //String httpPath = "http://khoapham.vn/KhoaPhamTraining/laptrinhios/jSON/demo3.json";
     String httpPath = "http://192.168.4.1";
@@ -105,28 +106,37 @@ public class SubscriptionFragment extends Fragment {
         final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
         final TextView ecVal    = (TextView) rootView.findViewById(R.id.ecVal);
         final TextView ppmVal   = (TextView) rootView.findViewById(R.id.ppmVal);
+        humiData.setText(humi+"(%)");
+        tempData.setText(temp+"(C Degree)");
+        PHData.setText(ph+"(+/-)");
+        ecVal.setText(ec + "(uS)");
+        ppmVal.setText(ppm + "");
+
         connection.addReceivedMessageListner(new IReceivedMessageListener() {
             @Override
             public void onMessageReceived(ReceivedMessage message) {
                 String jsonMes = new String(message.getMessage().getPayload());
                 //messageListAdapter.notifyDataSetChanged();
+                timeNow = message.getTimestamp();
+
                 //  Log.d("The Json mesage ........................................................", jsonMes);
                 if(jsonMes.contains("}")&&jsonMes.contains("{")){
                     try {
                         JSONObject sensorDataJson = new JSONObject(jsonMes);
-                        humi = (float)sensorDataJson.getDouble("humi") + i++;
-                        temp = (float)sensorDataJson.getDouble("temp");
-                        ph  = (float)sensorDataJson.getDouble("PH+-");
-                        ec = (float)sensorDataJson.getDouble("ec");
-                        ppm = (float)sensorDataJson.getDouble("ppm");
+                        humi = (float)sensorDataJson.getInt("humi")/100;
+                        temp = (float)sensorDataJson.getInt("temp")/100;
+                        ph  = (float)sensorDataJson.getInt("PH+-")/100;
+                        ec = sensorDataJson.getInt("ec");
+                        ppm = sensorDataJson.getInt("ppm");
+
+                        bot1Stt = sensorDataJson.getInt("rel1");
+                        bot2Stt = sensorDataJson.getInt("rel2");
+                        bot3Stt = sensorDataJson.getInt("rel3");
                         humiData.setText(humi+"(%)");
                         tempData.setText(temp+"(C Degree)");
                         PHData.setText(ph+"(+/-)");
                         ecVal.setText(ec + "(uS)");
                         ppmVal.setText(ppm + "");
-                        bot1Stt = sensorDataJson.getInt("rel1");
-                        bot2Stt = sensorDataJson.getInt("rel2");
-                        bot3Stt = sensorDataJson.getInt("rel3");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -137,7 +147,7 @@ public class SubscriptionFragment extends Fragment {
         //humiData.setText(humi);
        // tempData.setText(temp);
         //PHData.setText(ph);
-        Log.d(" run lai tu dau #########################################", ""+i);
+        //Log.d(" run lai tu dau #########################################", ""+i);
 
 
         btnRefresh.setOnClickListener(new View.OnClickListener() {
@@ -155,11 +165,11 @@ public class SubscriptionFragment extends Fragment {
                         if(httpMsg != null) {
                             try {
                                 sensorDataJson = new JSONObject(httpMsg);
-                                humi = (float)sensorDataJson.getDouble("humi") + i++;
-                                temp = (float)sensorDataJson.getDouble("temp");
-                                ph  = (float)sensorDataJson.getDouble("PH+-");
-                                ec = (float)sensorDataJson.getDouble("ec");
-                                ppm = (float)sensorDataJson.getDouble("ppm");
+                                humi = (float)sensorDataJson.getInt("humi")/100;
+                                temp = (float)sensorDataJson.getInt("temp")/100;
+                                ph  = (float)sensorDataJson.getInt("PH+-")/100;
+                                ec = sensorDataJson.getInt("ec");
+                                ppm = sensorDataJson.getInt("ppm");
                                 humiData.setText(humi+"(%)");
                                 tempData.setText(temp+"(C Degree)");
                                 PHData.setText(ph+"(+/-)");
@@ -178,8 +188,10 @@ public class SubscriptionFragment extends Fragment {
                             humiData.setText(humi+"(%)");
                             tempData.setText(temp+"(C Degree)");
                             PHData.setText(ph+"(+/-)");
+
                             ecVal.setText(ec + "(uS)");
                             ppmVal.setText(ppm +"");
+
                         }
                         /*JSONObject sensorDataJson = null;
                         try {
