@@ -1,0 +1,72 @@
+14:20:35 **** Incremental Build of configuration Debug_AVaRICE for project IOTSmartToolV5 ****
+"D:\\Working\\sloeber\\arduinoPlugin\\tools\\make\\make" all 
+Building file: ../.ino.cpp
+Starting C++ compile
+"D:\Working\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-g++" -D__ets__ -DICACHE_FLASH -U__STRICT_ANSI__ "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/include" "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lwip/include" -c -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections -DF_CPU=80000000L  -DARDUINO=10609 -DARDUINO_ESP8266_ESP12 -DARDUINO_ARCH_ESP8266 -DESP8266  -I"D:\Working\IOT\IOTFirmware\Greentura_Proj\IOTSmartToolV5\jsonData" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\variants\adafruit" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\ArduinoJson\5.6.6" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi\src" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\EEPROM" -MMD -MP -MF".ino.cpp.d" -MT".ino.cpp.o" -D__IN_ECLIPSE__=1 -x c++ "../.ino.cpp" -o ".ino.cpp.o"  -w
+Finished building: ../.ino.cpp
+ 
+Building file: D:\Working\sloeberrduinoPlugin\libraries\PubSubClient.6.0	ests\src\lib\BDDTest.cpp
+Starting C++ compile
+"D:\Working\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-g++" -D__ets__ -DICACHE_FLASH -U__STRICT_ANSI__ "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/include" "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lwip/include" -c -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections -DF_CPU=80000000L  -DARDUINO=10609 -DARDUINO_ESP8266_ESP12 -DARDUINO_ARCH_ESP8266 -DESP8266  -I"D:\Working\IOT\IOTFirmware\Greentura_Proj\IOTSmartToolV5\jsonData" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\variants\adafruit" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\ArduinoJson\5.6.6" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi\src" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\EEPROM" -MMD -MP -MF"libraries\PubSubClient\tests\src\lib\BDDTest.cpp.d" -MT"libraries\PubSubClient\tests\src\lib\BDDTest.cpp.o" -D__IN_ECLIPSE__=1 -x c++ "D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\BDDTest.cpp" -o "libraries\PubSubClient\tests\src\lib\BDDTest.cpp.o"  -w
+Finished building: D:\Working\sloeberrduinoPlugin\libraries\PubSubClient.6.0	ests\src\lib\BDDTest.cpp
+ 
+Building file: D:\Working\sloeberrduinoPlugin\libraries\PubSubClient.6.0	ests\src\lib\Buffer.cpp
+Starting C++ compile
+"D:\Working\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-g++" -D__ets__ -DICACHE_FLASH -U__STRICT_ANSI__ "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/include" "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lwip/include" -c -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections -DF_CPU=80000000L  -DARDUINO=10609 -DARDUINO_ESP8266_ESP12 -DARDUINO_ARCH_ESP8266 -DESP8266  -I"D:\Working\IOT\IOTFirmware\Greentura_Proj\IOTSmartToolV5\jsonData" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\variants\adafruit" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\ArduinoJson\5.6.6" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi\src" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\EEPROM" -MMD -MP -MF"libraries\PubSubClient\tests\src\lib\Buffer.cpp.d" -MT"libraries\PubSubClient\tests\src\lib\Buffer.cpp.o" -D__IN_ECLIPSE__=1 -x c++ "D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\Buffer.cpp" -o "libraries\PubSubClient\tests\src\lib\Buffer.cpp.o"  -w
+Finished building: D:\Working\sloeberrduinoPlugin\libraries\PubSubClient.6.0	ests\src\lib\Buffer.cpp
+ 
+Building file: D:\Working\sloeberrduinoPlugin\libraries\PubSubClient.6.0	ests\src\lib\IPAddress.cpp
+Starting C++ compile
+"D:\Working\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-g++" -D__ets__ -DICACHE_FLASH -U__STRICT_ANSI__ "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/include" "-ID:/Working/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lwip/include" -c -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections -DF_CPU=80000000L  -DARDUINO=10609 -DARDUINO_ESP8266_ESP12 -DARDUINO_ARCH_ESP8266 -DESP8266  -I"D:\Working\IOT\IOTFirmware\Greentura_Proj\IOTSmartToolV5\jsonData" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\variants\adafruit" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WebServer\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0" -I"D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\src" -I"D:\Working\sloeber\arduinoPlugin\libraries\ArduinoJson\5.6.6" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\ESP8266WiFi\src" -I"D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\libraries\EEPROM" -MMD -MP -MF"libraries\PubSubClient\tests\src\lib\IPAddress.cpp.d" -MT"libraries\PubSubClient\tests\src\lib\IPAddress.cpp.o" -D__IN_ECLIPSE__=1 -x c++ "D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp" -o "libraries\PubSubClient\tests\src\lib\IPAddress.cpp.o"  -w
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: In constructor 'IPAddress::IPAddress()':
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:7:41: error: cannot convert 'IPAddress::<anonymous union>' to 'void*' for argument '1' to 'void* memset(void*, int, size_t)'
+     memset(_address, 0, sizeof(_address));
+                                         ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: In constructor 'IPAddress::IPAddress(uint8_t, uint8_t, uint8_t, uint8_t)':
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:12:13: error: no match for 'operator[]' (operand types are 'IPAddress::<anonymous union>' and 'int')
+     _address[0] = first_octet;
+             ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:13:13: error: no match for 'operator[]' (operand types are 'IPAddress::<anonymous union>' and 'int')
+     _address[1] = second_octet;
+             ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:14:13: error: no match for 'operator[]' (operand types are 'IPAddress::<anonymous union>' and 'int')
+     _address[2] = third_octet;
+             ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:15:13: error: no match for 'operator[]' (operand types are 'IPAddress::<anonymous union>' and 'int')
+     _address[3] = fourth_octet;
+             ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: In constructor 'IPAddress::IPAddress(uint32_t)':
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:20:48: error: cannot convert 'IPAddress::<anonymous union>' to 'void*' for argument '1' to 'void* memcpy(void*, const void*, size_t)'
+     memcpy(_address, &address, sizeof(_address));
+                                                ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: In constructor 'IPAddress::IPAddress(const uint8_t*)':
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:25:47: error: cannot convert 'IPAddress::<anonymous union>' to 'void*' for argument '1' to 'void* memcpy(void*, const void*, size_t)'
+     memcpy(_address, address, sizeof(_address));
+                                               ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: In member function 'IPAddress& IPAddress::operator=(const uint8_t*)':
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:30:47: error: cannot convert 'IPAddress::<anonymous union>' to 'void*' for argument '1' to 'void* memcpy(void*, const void*, size_t)'
+     memcpy(_address, address, sizeof(_address));
+                                               ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: In member function 'IPAddress& IPAddress::operator=(uint32_t)':
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:36:65: error: cannot convert 'IPAddress::<anonymous union>' to 'void*' for argument '1' to 'void* memcpy(void*, const void*, size_t)'
+     memcpy(_address, (const uint8_t *)&address, sizeof(_address));
+                                                                 ^
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp: At global scope:
+D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:40:6: error: prototype for 'bool IPAddress::operator==(const uint8_t*)' does not match any in class 'IPAddress'
+ bool IPAddress::operator==(const uint8_t* addr)
+      ^
+In file included from D:\Working\sloeber\arduinoPlugin\libraries\PubSubClient\2.6.0\tests\src\lib\IPAddress.cpp:3:0:
+D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/IPAddress.h:65:14: error: candidates are: bool IPAddress::operator==(const uint8_t*) const
+         bool operator==(const uint8_t* addr) const;
+              ^
+D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/IPAddress.h:62:14: error:                 bool IPAddress::operator==(uint32_t) const
+         bool operator==(uint32_t addr) const {
+              ^
+D:\Working\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.2.0\cores\esp8266/IPAddress.h:59:14: error:                 bool IPAddress::operator==(const IPAddress&) const
+         bool operator==(const IPAddress& addr) const {
+              ^
+make: *** [libraries\PubSubClient\tests\src\lib\IPAddress.cpp.o] Error 1
+libraries\PubSubClient\tests\src\lib/subdir.mk:44: recipe for target 'libraries\PubSubClient\tests\src\lib\IPAddress.cpp.o' failed
+
+14:20:38 Build Finished (took 3s.83ms)
+

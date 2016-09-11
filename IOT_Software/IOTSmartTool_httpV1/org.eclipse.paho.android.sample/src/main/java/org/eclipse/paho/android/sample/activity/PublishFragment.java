@@ -54,7 +54,7 @@ public class PublishFragment extends Fragment {
     public static JSONObject jsonObject;
     int selectedQos = 0;
     boolean retainValue = false;
-    String topic = "d1";
+    String topic = "ndbn200491_pub";
     String message = "Hello world";
     public static int time1Onh=0,time2Onh=0, time3Onh=0, time1Onm= 0, time2Onm =0 , time3Onm = 0;
     public static int time1Offh, time1Offm, time2Offh, time2Offm, time3Offh, time3Offm;

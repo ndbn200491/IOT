@@ -1,0 +1,10 @@
+10:55:00 **** Incremental Build of configuration Release for project IOTSmartToolV3 ****
+"D:\\Working\\eclipseArduino\\arduinoPlugin\\tools\\make\\make" all 
+Create eeprom image
+"/esptool.exe" -eo "C:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/bootloaders/eboot/eboot.elf" -bo "D:\Working\IOT\IOTFirmware\Greentura_Proj\IOTSmartToolV3/Release/IOTSmartToolV3.bin" -bm qio -bf 40 -bz 4M -bs .text -bp 4096 -ec -eo "D:\Working\IOT\IOTFirmware\Greentura_Proj\IOTSmartToolV3/Release/IOTSmartToolV3.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
+/usr/bin/sh: /esptool.exe: No such file or directory
+make: *** [IOTSmartToolV3.hex] Error 127
+makefile:95: recipe for target 'IOTSmartToolV3.hex' failed
+
+10:55:01 Build Finished (took 796ms)
+

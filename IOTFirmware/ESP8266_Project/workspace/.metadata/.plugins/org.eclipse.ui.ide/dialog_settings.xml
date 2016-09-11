@@ -12,6 +12,10 @@
 			<item value=""/>
 		</list>
 	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
+	</section>
 	<section name="org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea">
 		<item value="C:\eclipseArduino\arduinoPlugin\examples\01.Basics\Blink" key="OUTSIDE_LOCATION"/>
 	</section>
