@@ -67,7 +67,7 @@ public class MqttCallbackHandler implements MqttCallback {
       intent.putExtra("handle", clientHandle);
 
       //notify the user
-      Notify.notifcation(context, message, intent, R.string.notifyTitle_connectionLost);
+      Notify.notifcation(context, "Water Low, ", intent, R.string.notifyTitle_connectionLost);
     }
   }
 

@@ -3,12 +3,13 @@ package org.eclipse.paho.android.sample.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ import java.util.Map;
 
 
 public class SubscriptionFragment extends Fragment {
-
+    private static final String activityClass = "org.eclipse.paho.android.sample.activity.MainActivity";
     int temp_qos_value = 0;
     ListView subscriptionListView;
     Thread subThread ;
@@ -54,6 +55,7 @@ public class SubscriptionFragment extends Fragment {
     float ph;
     int ec;
     int ppm;
+    int wLv ;
     String cmd;
     String httpContent;
     int i = 100000;
@@ -72,7 +74,6 @@ public class SubscriptionFragment extends Fragment {
     public SubscriptionFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,9 +84,7 @@ public class SubscriptionFragment extends Fragment {
                 .getConnections();
         connection = connections.get(connectionHandle);
         subscriptions = connection.getSubscriptions();
-
         messages = connection.getMessages();
-
         //this.runOnUiThread(Runnable action){
         //}
     }
@@ -106,19 +105,19 @@ public class SubscriptionFragment extends Fragment {
         final TextView PHData   = (TextView) rootView.findViewById(R.id.PHData);
         final TextView ecVal    = (TextView) rootView.findViewById(R.id.ecVal);
         final TextView ppmVal   = (TextView) rootView.findViewById(R.id.ppmVal);
+        final TextView wLevel   = (TextView) rootView.findViewById(R.id.waterLv) ;
+        //wLevel.setText("Water Level:"+"   " +  );
         humiData.setText(humi+"(%)");
         tempData.setText(temp+"(C Degree)");
         PHData.setText(ph+"(+/-)");
         ecVal.setText(ec + "(uS)");
         ppmVal.setText(ppm + "");
-
         connection.addReceivedMessageListner(new IReceivedMessageListener() {
             @Override
             public void onMessageReceived(ReceivedMessage message) {
                 String jsonMes = new String(message.getMessage().getPayload());
                 //messageListAdapter.notifyDataSetChanged();
                 timeNow = message.getTimestamp();
-
                 //  Log.d("The Json mesage ........................................................", jsonMes);
                 if(jsonMes.contains("}")&&jsonMes.contains("{")){
                     try {
@@ -128,10 +127,24 @@ public class SubscriptionFragment extends Fragment {
                         ph  = (float)sensorDataJson.getInt("PH+-")/100;
                         ec = sensorDataJson.getInt("ec");
                         ppm = sensorDataJson.getInt("ppm");
-
+                        wLv  = sensorDataJson.getInt("wLv");
                         bot1Stt = sensorDataJson.getInt("rel1");
                         bot2Stt = sensorDataJson.getInt("rel2");
                         bot3Stt = sensorDataJson.getInt("rel3");
+                        if(wLv ==1) {
+                            wLevel.setText("Water Level:             Safety ");
+                            wLevel.setBackgroundColor(Color.parseColor("#00dda2"));
+                        }else if(wLv == 0){
+                            wLevel.setText("Water Level:             Warning! Water Low  ");
+                            wLevel.setBackgroundColor(Color.parseColor("#ff0000"));
+                            Intent intent = new Intent();
+                            intent.setClassName(getContext(), activityClass);
+                            //intent.putExtra("handle", clientHandle);
+                           // Notify.notifcation(getContext(), "Water Level Warning", intent, R.string.wLevel_Low);
+                        }else{
+                            wLevel.setText("No Update");
+                        }
+
                         humiData.setText(humi+"(%)");
                         tempData.setText(temp+"(C Degree)");
                         PHData.setText(ph+"(+/-)");
@@ -165,6 +178,7 @@ public class SubscriptionFragment extends Fragment {
                         if(httpMsg != null) {
                             try {
                                 sensorDataJson = new JSONObject(httpMsg);
+                                wLv  = sensorDataJson.getInt("wLv");
                                 humi = (float)sensorDataJson.getInt("humi")/100;
                                 temp = (float)sensorDataJson.getInt("temp")/100;
                                 ph  = (float)sensorDataJson.getInt("PH+-")/100;

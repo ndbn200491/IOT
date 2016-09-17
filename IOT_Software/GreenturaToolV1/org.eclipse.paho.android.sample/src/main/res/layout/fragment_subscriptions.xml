@@ -207,8 +207,10 @@
     <View
         android:id="@+id/divider7"
         style="@style/Divider"
-        android:layout_below="@+id/textView6"
-        android:layout_marginLeft="10dp" /> <!-- *************************************************************************-->
+        android:layout_above="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" /> <!-- *************************************************************************-->
 
 
     <TextView
@@ -217,13 +219,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Some Others Info:................................."
         android:textSize="18dp"
-        android:background="@color/shadow_2"
         android:id="@+id/textView6"
-        android:layout_below="@+id/divider8"
-        android:layout_alignLeft="@+id/divider8"
-        android:layout_alignStart="@+id/divider8"
-        android:layout_alignRight="@+id/ecVal"
-        android:layout_alignEnd="@+id/ecVal" />
+        android:background="@color/button_material_light"
+        android:layout_below="@+id/waterLv"
+        android:layout_alignLeft="@+id/waterLv"
+        android:layout_alignStart="@+id/waterLv"
+        android:layout_alignRight="@+id/waterLv"
+        android:layout_alignEnd="@+id/waterLv" />
     <View
         android:id="@+id/divider8"
         style="@style/Divider"
@@ -238,10 +240,9 @@
         android:text="Exclusion Status:"
         android:textSize="20dp"
         android:id="@+id/textView7"
-        android:layout_alignBottom="@+id/checkBox"
-        android:layout_alignLeft="@+id/divider1"
-        android:layout_alignStart="@+id/divider1"
-        android:layout_alignTop="@+id/checkBox" />
+        android:layout_below="@+id/divider9"
+        android:layout_alignLeft="@+id/divider9"
+        android:layout_alignStart="@+id/divider9" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -292,5 +293,32 @@
         android:textIsSelectable="false"
         android:layout_alignRight="@+id/divider6"
         android:layout_alignEnd="@+id/divider6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Water Level:"
+        android:id="@+id/waterLv"
+        android:layout_alignTop="@+id/divider8"
+        android:textIsSelectable="false"
+        android:textSize="18dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignLeft="@+id/divider8"
+        android:layout_alignStart="@+id/divider8"
+        android:layout_alignRight="@+id/divider9"
+        android:layout_alignEnd="@+id/divider9" />
+
+    <View
+        android:id="@+id/divider9"
+        style="@style/Divider"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignTop="@+id/checkBox"
+        android:layout_marginLeft="10dp" />
+
+    <!-- *************************************************************************-->
+
+
+
+
 
 </RelativeLayout>

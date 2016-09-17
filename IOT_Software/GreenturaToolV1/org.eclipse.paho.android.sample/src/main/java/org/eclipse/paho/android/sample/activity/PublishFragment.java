@@ -92,8 +92,6 @@ public class PublishFragment extends Fragment {
 
 
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -351,7 +349,7 @@ public class PublishFragment extends Fragment {
                         checkBoxTime3.setChecked(false);
                     }
                 }else{
-                    time3Onm +=0;
+                    time3Onm =0;
                 }
 
 
