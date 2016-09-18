@@ -20698,9 +20698,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="335.28" y="-29.21" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="488.95" y1="-67.31" x2="488.95" y2="-64.77" width="0.1524" layer="91"/>
-<label x="488.95" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
-<pinref part="U$2" gate="G$1" pin="15"/>
+<wire x1="478.79" y1="-67.31" x2="478.79" y2="-64.77" width="0.1524" layer="91"/>
+<label x="478.79" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
+<pinref part="U$2" gate="G$1" pin="7"/>
 </segment>
 </net>
 <net name="PWM2" class="0">
@@ -20710,9 +20710,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="335.28" y="-31.75" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="486.41" y1="-67.31" x2="486.41" y2="-64.77" width="0.1524" layer="91"/>
-<label x="486.41" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
-<pinref part="U$2" gate="G$1" pin="13"/>
+<wire x1="481.33" y1="-67.31" x2="481.33" y2="-64.77" width="0.1524" layer="91"/>
+<label x="481.33" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
+<pinref part="U$2" gate="G$1" pin="9"/>
 </segment>
 </net>
 <net name="RST" class="0">
@@ -21427,8 +21427,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="243.84" y="50.8" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="478.79" y1="-35.56" x2="478.79" y2="-39.37" width="0.1524" layer="91"/>
-<label x="478.79" y="-39.37" size="1.27" layer="95" rot="R270" xref="yes"/>
+<wire x1="478.79" y1="-35.56" x2="478.79" y2="-40.64" width="0.1524" layer="91"/>
+<label x="478.79" y="-40.64" size="1.27" layer="95" rot="R270" xref="yes"/>
+<pinref part="U$6" gate="G$1" pin="12"/>
 </segment>
 </net>
 <net name="PB4" class="0">
@@ -21443,8 +21444,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="243.84" y="35.56" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="481.33" y1="-35.56" x2="481.33" y2="-39.37" width="0.1524" layer="91"/>
-<label x="481.33" y="-39.37" size="1.27" layer="95" rot="R270" xref="yes"/>
+<wire x1="481.33" y1="-35.56" x2="481.33" y2="-40.64" width="0.1524" layer="91"/>
+<label x="481.33" y="-40.64" size="1.27" layer="95" rot="R270" xref="yes"/>
+<pinref part="U$6" gate="G$1" pin="14"/>
 </segment>
 </net>
 <net name="PE4" class="0">
@@ -21495,8 +21497,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="243.84" y="53.34" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="476.25" y1="-35.56" x2="476.25" y2="-39.37" width="0.1524" layer="91"/>
-<label x="476.25" y="-39.37" size="1.27" layer="95" rot="R270" xref="yes"/>
+<wire x1="476.25" y1="-35.56" x2="476.25" y2="-40.64" width="0.1524" layer="91"/>
+<label x="476.25" y="-40.64" size="1.27" layer="95" rot="R270" xref="yes"/>
+<pinref part="U$6" gate="G$1" pin="10"/>
 </segment>
 </net>
 <net name="PH5" class="0">
@@ -21527,8 +21530,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="243.84" y="33.02" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="483.87" y1="-35.56" x2="483.87" y2="-39.37" width="0.1524" layer="91"/>
-<label x="483.87" y="-39.37" size="1.27" layer="95" rot="R270" xref="yes"/>
+<wire x1="483.87" y1="-35.56" x2="483.87" y2="-40.64" width="0.1524" layer="91"/>
+<label x="483.87" y="-40.64" size="1.27" layer="95" rot="R270" xref="yes"/>
+<pinref part="U$6" gate="G$1" pin="16"/>
 </segment>
 </net>
 <net name="PWM4" class="0">
@@ -21538,9 +21542,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <label x="335.28" y="-36.83" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="481.33" y1="-67.31" x2="481.33" y2="-64.77" width="0.1524" layer="91"/>
-<label x="481.33" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
-<pinref part="U$2" gate="G$1" pin="9"/>
+<wire x1="486.41" y1="-67.31" x2="486.41" y2="-64.77" width="0.1524" layer="91"/>
+<label x="486.41" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
+<pinref part="U$2" gate="G$1" pin="13"/>
 </segment>
 </net>
 <net name="RXD2" class="0">
@@ -21773,9 +21777,9 @@ Spark Fun Electronics SKU : Comp-Buzzer</description>
 <wire x1="476.25" y1="25.4" x2="486.41" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<wire x1="478.79" y1="-67.31" x2="478.79" y2="-64.77" width="0.1524" layer="91"/>
-<label x="478.79" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
-<pinref part="U$2" gate="G$1" pin="7"/>
+<wire x1="488.95" y1="-67.31" x2="488.95" y2="-64.77" width="0.1524" layer="91"/>
+<label x="488.95" y="-64.77" size="1.27" layer="95" rot="R90" xref="yes"/>
+<pinref part="U$2" gate="G$1" pin="15"/>
 </segment>
 </net>
 <net name="SQW" class="0">

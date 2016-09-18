@@ -38,7 +38,7 @@ Bnag Nguyen
 //#define MQTT_DEBUG_CONNECTION
 //#define DEBUG_MQTT_PRO
 //#define MQTT_RX
-#define SERIAL_RX_BUFEER_SIZE 20
+#define SERIAL_RX_BUFEER_SIZE 22
 #define SERIAL_TX_BUFFER_SIZE 41
 #define CHAR_TAIL_TX 255
 #define CHAR_TAIL_RX 255
@@ -99,7 +99,7 @@ StaticJsonBuffer<300> jsonBuffer;
 }sensorDataStruct_t;
 */
 typedef union {
-  char bufferDrvRx[SERIAL_RX_BUFEER_SIZE];
+  char bufferDrvRx[SERIAL_RX_BUFEER_SIZE-1];
   struct{
 
 	  uint16_t tempVal;
@@ -115,6 +115,7 @@ typedef union {
 	  uint8_t relay2Stt;
 	  uint8_t relay3Stt;
 	  uint8_t relay4Stt;
+	  uint8_t wLevel ;
 
   };
 }driverDataStruct_t;
@@ -167,6 +168,8 @@ void jsonTxMessageUpdate(){
 	root.end();
 	is++;
 	*/
+
+
 	root["stt"]  = driverDataRx.sst ;
 	root["humi"] = driverDataRx.humdVal ;
 	root["temp"] = driverDataRx.tempVal;
@@ -178,7 +181,7 @@ void jsonTxMessageUpdate(){
 	root["rel2"] = driverDataRx.relay2Stt;
 	root["rel3"] = driverDataRx.relay3Stt;
 	root["rel4"] = driverDataRx.relay4Stt;
-
+	root["wLv"]  = driverDataRx.wLevel;
 	root.printTo(jsonTxMsg, 200);
 	root.end();	 //root.operator [](MqttMes);
 }
@@ -477,9 +480,7 @@ void httpLocalProcess(void){
 	 appDataRx.ctrlBot3  = rootRxHttp["ctrlBot3"];
 	 appDataRx.ctrlMode  = rootRxHttp["ctrlMode"];
 	 appDataRx.sysTail  = CHAR_TAIL_TX ;
-	 for(int i = 0; i <SERIAL_TX_BUFFER_SIZE; i++){
-	   Serial.print(appDataRx.ctrAppData[i]);
-	 }
+	 for(int i = 0; i <SERIAL_TX_BUFFER_SIZE; i++){                   }
 	 Serial.flush();
 	}
 
@@ -487,8 +488,9 @@ void httpLocalProcess(void){
 //
 void readSerial() // baud = 115200
 {
-	if(Serial.available()){
+	while(Serial.available()){
 	Serial.readBytesUntil(CHAR_TAIL_RX,driverDataRx.bufferDrvRx, SERIAL_RX_BUFEER_SIZE);
+
 	}
 			/*if(driverDataRx.sysn != 0b10101010){
 				seriCnt = 0;
