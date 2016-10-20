@@ -35,7 +35,7 @@ Bnag Nguyen
 //#define DEBUG
 //#define DEBUG_USART
 //#define DEBUG_USART_MQTT_REC
-//#define MQTT_DEBUG_CONNECTION
+#define MQTT_DEBUG_CONNECTION
 //#define DEBUG_MQTT_PRO
 //#define MQTT_RX
 #define SERIAL_RX_BUFEER_SIZE 20
@@ -574,7 +574,7 @@ void loop() {
 	if(driverDataRx.sysn != 0xAA){
 			//Serial.end();
 			//Serial.begin(115200);
-		ESP.reset();
+		//ESP.reset();
 	}
 
 	static int mqttConnectTime = 0;

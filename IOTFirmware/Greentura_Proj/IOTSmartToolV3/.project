@@ -49,7 +49,7 @@
 		<link>
 			<name>libraries/ArduinoJson</name>
 			<type>2</type>
-			<location>C:/eclipseArduino/arduinoPlugin/libraries/ArduinoJson/5.5.0</location>
+			<location>D:/Working/eclipseArduino/arduinoPlugin/libraries/ArduinoJson/5.6.7</location>
 		</link>
 		<link>
 			<name>libraries/EEPROM</name>
@@ -69,7 +69,7 @@
 		<link>
 			<name>libraries/PubSubClient</name>
 			<type>2</type>
-			<location>C:/eclipseArduino/arduinoPlugin/libraries/PubSubClient/2.6.0</location>
+			<location>D:/Working/eclipseArduino/arduinoPlugin/libraries/PubSubClient/2.2.0</location>
 		</link>
 	</linkedResources>
 </projectDescription>

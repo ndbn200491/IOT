@@ -1,4 +1,4 @@
-13:11:18 **** Incremental Build of configuration Release for project IOTSmartToolV4 ****
+15:13:16 **** Build of configuration Release for project IOTSmartToolV4 ****
 "C:\\eclipseArduino\\arduinoPlugin\\tools\\make\\make" all 
 Building target: IOTSmartToolV4
 Printing size:
@@ -84,5 +84,5 @@ Total                                                                           
 Finished building target: IOTSmartToolV4
  
 
-13:11:19 Build Finished (took 928ms)
+15:13:17 Build Finished (took 1s.228ms)
 

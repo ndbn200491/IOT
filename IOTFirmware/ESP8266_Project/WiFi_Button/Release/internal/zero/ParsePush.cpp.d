@@ -1,1 +1,2 @@
-internal/zero/ParsePush.cpp.o: ../internal/zero/ParsePush.cpp
+internal\zero\ParsePush.cpp.o: \
+ D:\Working\IOT\IOTFirmware\ESP8266_Project\WiFi_Button\internal\zero\ParsePush.cpp

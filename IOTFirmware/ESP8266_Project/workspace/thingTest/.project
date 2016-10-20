@@ -64,7 +64,7 @@
 		<link>
 			<name>libraries/WiFi</name>
 			<type>2</type>
-			<location>C:/eclipseArduino/arduinoPlugin/libraries/WiFi/1.2.6</location>
+			<location>D:/Working/eclipseArduino/arduinoPlugin/libraries/WiFi/1.2.6</location>
 		</link>
 	</linkedResources>
 </projectDescription>

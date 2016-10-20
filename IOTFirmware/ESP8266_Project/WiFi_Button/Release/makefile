@@ -4,23 +4,23 @@
 
 -include ../makefile.init
 
-RM := rm -f
+RM := del 
 
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir.mk
--include libraries/ESP8266WiFi/src/subdir.mk
--include libraries/ESP8266WebServer/src/subdir.mk
--include libraries/EEPROM/subdir.mk
--include internal/zero/subdir.mk
--include internal/yun/subdir.mk
--include internal/esp8266/subdir.mk
+-include libraries\ESP8266WiFi\src/subdir.mk
+-include libraries\ESP8266WebServer\src/subdir.mk
+-include libraries\EEPROM/subdir.mk
+-include internal\zero/subdir.mk
+-include internal\yun/subdir.mk
+-include internal\esp8266/subdir.mk
 -include internal/subdir.mk
--include external/FlashStorage/subdir.mk
--include core/core/umm_malloc/subdir.mk
--include core/core/spiffs/subdir.mk
--include core/core/libb64/subdir.mk
--include core/core/subdir.mk
+-include external\FlashStorage/subdir.mk
+-include core\core\umm_malloc/subdir.mk
+-include core\core\spiffs/subdir.mk
+-include core\core\libb64/subdir.mk
+-include core\core/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -65,51 +65,43 @@ arduino.ar \
 ELF += \
 WiFi_Button.elf \
 
-EEP += \
-WiFi_Button.eep \
-
-FLASH_IMAGE += \
-WiFi_Button.bin \
+HEX += \
+WiFi_Button.hex \
 
 
 # All Target
 all: WiFi_Button
 
 # Tool invocations
-WiFi_Button: $(FLASH_IMAGE)
+WiFi_Button: $(HEX)
 	@echo 'Building target: $@'
 	@echo 'Printing size:'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "C:/eclipseArduino/WiFi_Button/Release/WiFi_Button.elf"
+	"D:\Download\V3.1_win64.2016-08-03_16-31-05\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "D:/Working/IOT/IOTFirmware/ESP8266_Project/WiFi_Button/Release/WiFi_Button.elf"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 arduino.ar: $(AR_OBJ)
 	@echo 'Starting archiver'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-ar" cru  "C:/eclipseArduino/WiFi_Button/Release/arduino.ar"    arduino.ar $(AR_OBJ)
+	"D:\Download\V3.1_win64.2016-08-03_16-31-05\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-ar" cru "D:/Working/IOT/IOTFirmware/ESP8266_Project/WiFi_Button/Release/arduino.ar"  arduino.ar $(AR_OBJ)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 WiFi_Button.elf: $(LINK_OBJ) $(AR)
 	@echo 'Starting combiner'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/lib" "-LC:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/tools/sdk/ld" "-Teagle.flash.4m1m.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy  -o "C:/eclipseArduino/WiFi_Button/Release/WiFi_Button.elf" -Wl,--start-group   $(LINK_OBJ) $(AR)  "C:/eclipseArduino/WiFi_Button/Release/arduino.ar" -lm -lgcc -lhal -lphy -lpp -lnet80211 -lwpa -lcrypto -lmain -lwps -laxtls -lsmartconfig -lmesh -lwpa2 -llwip -Wl,--end-group  "-LC:/eclipseArduino/WiFi_Button/Release"
+	"D:\Download\V3.1_win64.2016-08-03_16-31-05\sloeber\arduinoPlugin\tools\esp8266\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-LD:/Download/V3.1_win64.2016-08-03_16-31-05/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.1.0/tools/sdk/lib" "-LD:/Download/V3.1_win64.2016-08-03_16-31-05/sloeber/arduinoPlugin/packages/esp8266/hardware/esp8266/2.1.0/tools/sdk/ld" "-Teagle.flash.4m.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy -o "D:/Working/IOT/IOTFirmware/ESP8266_Project/WiFi_Button/Release/WiFi_Button.elf" -Wl,--start-group  $(LINK_OBJ) $(AR) "D:/Working/IOT/IOTFirmware/ESP8266_Project/WiFi_Button/Release/arduino.ar" -lm -lgcc -lhal -lphy -lpp -lnet80211 -llwip -lwpa -lcrypto -lmain -lwps -laxtls -lsmartconfig -lmesh -lwpa2 -Wl,--end-group "-LD:/Working/IOT/IOTFirmware/ESP8266_Project/WiFi_Button/Release"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-WiFi_Button.eep: $(ELF)
+WiFi_Button.hex: $(ELF)
 	@echo 'Create eeprom image'
+	${A.RECIPE.OBJCOPY.HEX.PATTERN}
 	${A.RECIPE.OBJCOPY.EEP.PATTERN}
-	@echo 'Finished building: $@'
-	@echo ' '
-
-WiFi_Button.bin: $(EEP)
-	@echo 'Create Flash image (ihex format)'
-	"C:\eclipseArduino\arduinoPlugin\tools\esp8266\esptool\0.4.8/esptool.exe" -eo "C:/eclipseArduino/arduinoPlugin/packages/esp8266/hardware/esp8266/2.2.0/bootloaders/eboot/eboot.elf" -bo "C:/eclipseArduino/WiFi_Button/Release/WiFi_Button.bin" -bm qio -bf 80 -bz 4M -bs .text -bp 4096 -ec -eo "C:/eclipseArduino/WiFi_Button/Release/WiFi_Button.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(C_UPPER_DEPS)$(PDE_DEPS)$(C_DEPS)$(AR)$(EEP)$(FLASH_IMAGE)$(CC_DEPS)$(AR_OBJ)$(C++_DEPS)$(LINK_OBJ)$(CXX_DEPS)$(ASM_DEPS)$(INO_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(ELF)$(CPP_DEPS) WiFi_Button
+	-$(RM) $(C_UPPER_DEPS)$(PDE_DEPS)$(C_DEPS)$(AR)$(CC_DEPS)$(AR_OBJ)$(C++_DEPS)$(LINK_OBJ)$(CXX_DEPS)$(ASM_DEPS)$(HEX)$(INO_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(ELF)$(CPP_DEPS)
 	-@echo ' '
 
 .PHONY: all clean dependents

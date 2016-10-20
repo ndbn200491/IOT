@@ -26,7 +26,7 @@ String password = "thienhaiblue";
 char* objectId = new char[10];
 
 
-const char *ssid_ap = "Bang_Nguyen";
+const char *ssid_ap = "config_me";
 IPAddress ip(192, 168, 0, 1);
 IPAddress gateway(192, 168, 0, 1);
 IPAddress subnet(255, 255, 255, 0);
@@ -58,12 +58,12 @@ void ReadVolts()
   int sensorValue = analogRead(A0); //read the A0 pin value
   voltage = sensorValue * (BAT_MAX_LEVEL / 1023.00); //convert the value to a true voltage.
   Serial.println(voltage);
- 
+
 }
-void createObject() {  
+void createObject() {
   //Serial.println(press_time);
   //dtostrf(voltage,2, 2, buf2);
-  //sprintf(buf,"%d", press_time); 
+  //sprintf(buf,"%d", press_time);
   Serial.println("create object");
   ParseObjectCreate create;
   create.setClassName("DeviceOpenLog");
@@ -72,10 +72,10 @@ void createObject() {
   create.add("batteryLevel",voltage);
   {
       ParseResponse createResponse = create.send();
-      delay(500);         
+      delay(500);
       createResponse.close();
   }
-   
+
 }
 
 //Config page
@@ -83,18 +83,18 @@ void handleConfig(){
   String msg;
   Serial.println("Config page");
   if (server.hasArg("SSID") && server.hasArg("PASSWORD")){
-    Serial.println("network:");    
+    Serial.println("network:");
     if ((server.arg("MOBILEID") != "")){//&& (server.arg("SSID") != "")
       ssid_conf = server.arg("SSID");
       Serial.println(ssid_conf);
       pass_conf = server.arg("PASSWORD");
       Serial.println(pass_conf);
-      mobileID_conf = server.arg("MOBILEID");    
-      Serial.println(mobileID_conf);  
+      mobileID_conf = server.arg("MOBILEID");
+      Serial.println(mobileID_conf);
       String header = "HTTP/1.1 301 OK\r\nLocation: /\r\nCache-Control: no-cache\r\n\r\n";
       server.sendContent(header);
-      Serial.println("Complete Config!"); 
-      state = RUN;     
+      Serial.println("Complete Config!");
+      state = RUN;
       return;
     }
   }
@@ -143,7 +143,7 @@ void handleRoot() {
     state = CONFIG;
     return;
  }
-  
+
 }
 
 void eeprom_write_pressedtime(int val){
@@ -162,7 +162,7 @@ void eeprom_write_SSID(){
     EEPROM.write(0x04+i,ssid_conf[i]);
   }
   EEPROM.commit();
-  
+
 }
 void eeprom_read_SSID(){
   ssid_length = EEPROM.read(0x03);
@@ -177,7 +177,7 @@ void eeprom_write_Password(){
     EEPROM.write(0x26+i,pass_conf[i]);
   }
   EEPROM.commit();
-  
+
 }
 void eeprom_read_Password(){
   pass_length = EEPROM.read(0x25);
@@ -193,7 +193,7 @@ void eeprom_write_mobileID(){
     EEPROM.write(0x38+i,mobileID_conf[i]);
   }
   EEPROM.commit();
-  
+
 }
 void eeprom_read_mobileID(){
   mobileID_length = EEPROM.read(0x37);
@@ -205,7 +205,7 @@ void eeprom_read_mobileID(){
 String mac2Str(String mac){
   String temp="";
   for(int i = 0; i< mac.length();i++){
-    if(mac[i]!=':')  
+    if(mac[i]!=':')
       temp+=mac[i];
   }
   return temp;
@@ -238,11 +238,7 @@ uint32_t my_usToTicks(uint32_t us)
     return (TIMER1_TICKS_PER_US / 16 * us);     // converts microseconds to tick
 }
 
-void setup() { 
-  for (int i = 0; i < 512; i++) {
-	EEPROM.write(i, 0);
-	Serial.println("EEPROM Cleared..!");
-	}
+void setup() {
   digitalWrite(sleepPin,LOW); //keep power is on
   pinMode(sleepPin, OUTPUT);
   digitalWrite(sleepPin,LOW); //keep power is on
@@ -264,7 +260,7 @@ void setup() {
 //  Serial.printf("\r\ntimer:%d\r\n",timer_cnt);
 //  delay(3000);
 //  }
-  /*while(1){
+  while(1){
     buttonState = digitalRead(buttonPin);
     if(buttonState == HIGH){
       break;
@@ -272,15 +268,13 @@ void setup() {
     press_wakeup++;
     delay(1);
   }
-  
+
   if(press_wakeup<TIME_PUSH_CHANGE_MODE_SEC*1000){ // 10 seconds
     Serial.print("Normal mode\r\n");
     state = RUN;
     press_store = 0;
   }
   else{
-  */
-
     state = START;
     press_time = 0;
     Serial.print("Config mode\r\n");
@@ -294,21 +288,16 @@ void setup() {
     server.on("/", handleRoot);
     server.on("/config", handleConfig);
     server.begin();
-    Serial.println("HTTP server started");    
-    // write a 0 to all 512 bytes of the EEPROM
-
-
-    // turn the LED on when we’re done
-    //digitalWrite(13, HIGH);
+    Serial.println("HTTP server started");
   }
-//}
+}
 
 
-void loop() {  
+void loop() {
   if(state == START || state == CONFIG){
     server.handleClient();
     timeout++;delay(1);
-    if(timeout>TIME_OUT_CONFIG_MIN*60*1000){ //3*60*1000= 180 seconds = 3 mins      
+    if(timeout>TIME_OUT_CONFIG_MIN*60*1000){ //3*60*1000= 180 seconds = 3 mins
       timeout = 0;
       state = RUN;
       press_wakeup = 0;
@@ -330,9 +319,9 @@ void loop() {
     Serial.print("ModuleID:");
     Serial.println(moduleID);
     WiFi.mode(WIFI_STA);
-    Serial.print("connecting to: "); 
+    Serial.print("connecting to: ");
     eeprom_read_SSID();
-    eeprom_read_Password();   
+    eeprom_read_Password();
     Serial.println(ssid.c_str());
     Serial.println(password.c_str());
     WiFi.begin(ssid.c_str(), password.c_str());
@@ -347,7 +336,7 @@ void loop() {
         pinMode(sleepPin, INPUT);
         break;
       }
-      
+
     }
     Serial.println("");
     Serial.println("WiFi connected");
@@ -357,58 +346,33 @@ void loop() {
     //Parse.begin("KzdRsSQe7buv3qFqOnTGWY3Mke9KuXdtWFpiJtif", "DrASWRqzmlaoYccR7ENLjMUyfifCtRKbGqRAhClN");
     Parse.begin("LlOTRAEIF2oOa23wFdMOLKRPc0SQQ6AK4OTFPu9o", "Y2UnZTDjmdxdDqhGP60YovNnQCSmsa2gYFC9CDjY");
     delay(500);
-
-    // Bang check.....
-
-   // client.println("</html>");
-
-    delay(1);
-    Serial.println("Client disonnected");
-    Serial.println("");
-
-    server.sendContent("</html>");
-    server.sendContent("HTTP/1.1 200 OK");
-    server.sendContent("Content-Type: text/html");
-    server.sendContent(""); //  do not forget ths one
-    server.sendContent("<!DOCTYPE HTML>");
-    server.sendContent("<html>");
-    server.sendContent("<br>");
-    server.sendContent("<head><br>");
-     //client.println("<a href=\"/sensorData\"");
-    server.sendContent("<p>The sensorData: </p>");
-    server.sendContent("</head>");
-    server.sendContent("</html");
-    delay(200);
-    Parse.begin("LlOTRAEIF2oOa23wFdMOLKRPc0SQQ6AK4OTFPu9o", "Y2UnZTDjmdxdDqhGP60YovNnQCSmsa2gYFC9CDjY");
-
-    //end check
     ReadVolts();
-    
+
     eeprom_read_pressedtime();
     press_time++;
     eeprom_write_pressedtime(press_time);
     Serial.println(press_time);
-    
+
     eeprom_read_mobileID();
     Serial.print("MobileID:");
     Serial.println(mobileID.c_str());
-    
+
     Serial.print("ModuleID:");
     Serial.println(moduleID.c_str());
 
     //send data to server
     createObject();
-    
-    Serial.println("\r\nWaiting for next ..."); 
+
+    Serial.println("\r\nWaiting for next ...");
     timeout = 0;
     state = SEND_DATA;
   }
-  else if(state == SEND_DATA){    
+  else if(state == SEND_DATA){
     timeout++;delay(1);
-    if(timeout>TIME_IDLE_BEFORE_SLEEP_SEC*16/3){// 15 second      
+    if(timeout>TIME_IDLE_BEFORE_SLEEP_SEC*16/3){// 15 second
       Serial.println("\r\nSleep ....");
       Serial.println(TIME_IDLE_BEFORE_SLEEP_SEC);
-      //ESP.deepSleep(0);        
+      //ESP.deepSleep(0);
       pinMode(sleepPin, INPUT);
     }
     else{
@@ -422,9 +386,9 @@ void loop() {
       press_time++;
       eeprom_write_pressedtime(press_time);
       ReadVolts();
-      createObject();     
+      createObject();
       delay(100);
-      Serial.println("\r\nWaiting for next ..."); 
+      Serial.println("\r\nWaiting for next ...");
     }
   */
     while(press_store>0){
@@ -433,12 +397,12 @@ void loop() {
       eeprom_write_pressedtime(press_time);
       ReadVolts();
       createObject();
-      press_store--;     
-      
+      press_store--;
+
       Serial.printf("\r\nPress store:%d",press_store);
       delay(100);
       Serial.println("\r\nWaiting for next ...");
-       
+
     }
     delay(200);
   }

@@ -1,1 +1,2 @@
-internal/yun/ParseClient.cpp.o: ../internal/yun/ParseClient.cpp
+internal\yun\ParseClient.cpp.o: \
+ D:\Working\IOT\IOTFirmware\ESP8266_Project\WiFi_Button\internal\yun\ParseClient.cpp
