@@ -73,7 +73,6 @@ char jsonTxMsg[300];
 int value = 0;
 int is = 0  ;
 StaticJsonBuffer<300> jsonBuffer;
-
  //
  // Step 2: Build object tree in memory
  //

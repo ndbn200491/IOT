@@ -1,4 +1,4 @@
-10:21:42 **** Incremental Build of configuration Release for project Green_tool_login_v1 ****
+10:28:21 **** Incremental Build of configuration Release for project Green_tool_login_v1 ****
 "D:\\eclipseArduino\\arduinoPlugin\\tools\\make\\make" all 
 Building file: ../.ino.cpp
 Starting C++ compile
@@ -35,17 +35,17 @@ Printing size:
 D:/Working/IOT/IOTFirmware/Green_new_proj/Green_tool_login_v1/Release/Green_tool_login_v1.elf  :
 section                                                                                                                                                                                                                        size         addr
 .data                                                                                                                                                                                                                           924   1073643520
-.rodata                                                                                                                                                                                                                        4288   1073644448
-.bss                                                                                                                                                                                                                          33064   1073648736
-.irom0.text                                                                                                                                                                                                                  219616   1075843088
+.rodata                                                                                                                                                                                                                        4312   1073644448
+.bss                                                                                                                                                                                                                          33056   1073648760
+.irom0.text                                                                                                                                                                                                                  219680   1075843088
 .text                                                                                                                                                                                                                         28885   1074790400
 .debug_frame                                                                                                                                                                                                                  33268            0
-.debug_info                                                                                                                                                                                                                  669112            0
+.debug_info                                                                                                                                                                                                                  669216            0
 .debug_abbrev                                                                                                                                                                                                                 80152            0
 .debug_loc                                                                                                                                                                                                                   198598            0
 .debug_aranges                                                                                                                                                                                                                 9976            0
-.debug_ranges                                                                                                                                                                                                                 23904            0
-.debug_line                                                                                                                                                                                                                  191461            0
+.debug_ranges                                                                                                                                                                                                                 23880            0
+.debug_line                                                                                                                                                                                                                  191479            0
 .debug_str                                                                                                                                                                                                                   122021            0
 .comment                                                                                                                                                                                                                       8920            0
 .xtensa.info                                                                                                                                                                                                                     56            0
@@ -135,11 +135,11 @@ section                                                                         
 .xt.prop._ZTV9IPAddress                                                                                                                                                                                                          12            0
 .xt.lit._ZN5Print5writeEPKc                                                                                                                                                                                                       0            0
 .xt.prop._ZN5Print5writeEPKc                                                                                                                                                                                                     48            0
-Total                                                                                                                                                                                                                       1627033
+Total                                                                                                                                                                                                                       1627211
 
 
 Finished building target: Green_tool_login_v1
  
 
-10:21:52 Build Finished (took 9s.854ms)
+10:28:31 Build Finished (took 9s.637ms)
 

@@ -3,7 +3,7 @@ Automatically\ import\ libraries=true
 Board=Adafruit HUZZAH ESP8266
 Board\ custom\ option\ selections=Flash Mode\=\nProcessor\=\nFlash Frequency\=\nCPU Frequency\=80 MHz\nFlash Size\=4M (3M SPIFFS)\nDebug port\=\nlwIP Variant\=\nDebug Level\=\nReset Method\=\nModule\=\nUpload Speed\=115200
 Boards\ file=D\:\\eclipseArduino\\arduinoPlugin\\packages\\esp8266\\hardware\\esp8266\\2.2.0\\boards.txt
-FmStatus=44
+FmStatus=45
 FuStatub=80
 FuStatus=30
 JANTJE.TEMPLATE_FOLDER=

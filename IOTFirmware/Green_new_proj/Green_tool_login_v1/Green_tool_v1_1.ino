@@ -38,7 +38,7 @@ Bnag Nguyen
 //#define DEBUG_USART_MQTT_REC
 //#define MQTT_DEBUG_CONNECTION
 #define DEBUG_MQTT_PRO
-//#define MQTT_RX
+#define MQTT_RX
 #define SERIAL_RX_BUFEER_SIZE 22
 #define SERIAL_TX_BUFFER_SIZE 41
 #define CHAR_TAIL_TX 255
